@@ -1,3 +1,5 @@
+from keys import key, client, user_agent
+
 import praw
 import datetime
 import csv
