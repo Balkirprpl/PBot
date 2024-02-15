@@ -49,13 +49,14 @@ def display_info(user):
             #print(comments.body)
             comment_array.append(comments.body)
     z = 1.0
-    seen = False
-    for c1 in comment_array:
-        for c2 in comment_array:
-            if not seen and c1 == c2:
-                seen = True
-            else:
-                z *= compare_text(c1, c2)
+    l = len(comment_array)
+    for i1 in range(l):
+        for i2 in range(i1 + 1, l):
+            c1 = comment_array[i1]
+            c2 = comment_array[i2]
+            z *= compare_text(c1, c2)
+
+
     if z < 0.3:
         z = f"{blue}Less than 0.3"
     print(f"index of suspiciousty: {red}{z}{reset}")
@@ -122,13 +123,21 @@ if __name__ == "__main__":
                          client_secret=key,
                          user_agent=user_agent)
 
-    x = input("1.single search or 2.submission search (1/2)?")
+    x = input("1.single search or 2.submission search (1/2)? ")
     if x == '1':
         x = input("username or 0 to leave: ")
         while x != '0':
-            user = reddit.redditor(x)
-            display_info(user)
+            if '/u/' in x[0:3]:
+                print(x)
+                x = x[3:]
+                print(x)
+            try:
+                user = reddit.redditor(x)
+                display_info(user)
+            except Exception as e:
+                print(f"{red}Error While finding user {blue}{x}{reset}\n{e}")
             x = input(">>> ")
+
         exit()
     #Fetch the top posts from the "programming" subreddit
     x = input("What subreddit you want to look at? ")
@@ -136,15 +145,19 @@ if __name__ == "__main__":
     y = int(input("How many posts to retrieve? "))
 
     posts =[]
-    if z.lower() == 'n':
-        posts = reddit.subreddit(x).new(limit=y)
-    if z.lower() == 'h':
-        posts = reddit.subreddit(x).hot(limit=y)
-    if z.lower() == 't':
-        posts = reddit.subreddit(x).top(limit=y)
-    depth = int(input("Depth: "))
-    post_ids = [post.id for post in posts]
-    find_info(post_ids, depth)
+    try:
+        if z.lower() == 'n':
+            posts = reddit.subreddit(x).new(limit=y)
+        if z.lower() == 'h':
+            posts = reddit.subreddit(x).hot(limit=y)
+        if z.lower() == 't':
+            posts = reddit.subreddit(x).top(limit=y)
+        depth = int(input("Depth: "))
+        post_ids = [post.id for post in posts]
+        find_info(post_ids, depth)
+    except:
+        print(f"{red}Error while fetching posts. Exiting.{reset}")
+        exit()
 
     file.close()
 
