@@ -1,4 +1,5 @@
 from keys import key, client, user_agent
+from detect2 import scanAccount
 
 import praw
 import datetime
@@ -56,10 +57,11 @@ def display_info(user):
             c2 = comment_array[i2]
             z *= compare_text(c1, c2)
 
+    if z > 0.3:
+        print(f"index of suspiciousty: {red}{z}{reset} (Likely Bot)")
+    else:
+        print(f"index of suspiciousty: {blue}{z}{reset} (Not Likely Bot)")
 
-    if z < 0.3:
-        z = f"{blue}Less than 0.3"
-    print(f"index of suspiciousty: {red}{z}{reset}")
     total_submissions = 0
     for submission in user.submissions.new(limit=None):
         total_submissions += 1
@@ -84,6 +86,17 @@ Is verified: {red}{user.verified}{reset}
 Total submissions: {red}{total_submissions}{reset}
 Total comments: {red}{total_comments}{reset}
 """)
+
+    detect2_data = scanAccount(user.name, 50) # second detection algorithm
+    if detect2_data > 129:
+        print(f"""2nd Bot Detection Score: {red}{detect2_data} (Likely Bot){reset}""")
+    else:
+        print(f"""2nd Bot Detection Score: {blue}{detect2_data} (Not Likely Bot){reset}""")
+              
+    if ((detect2_data > 129 and z >= 0.3) or (detect2_data <= 129 and z < 0.3)):
+        print(f"""{blue}Agreement in Detection{reset}\n""")
+    else:
+        print(f"""{red}Disagreement in Detection{reset}\n""")
 
 
 def check_commentss(username):
@@ -160,4 +173,3 @@ if __name__ == "__main__":
         exit()
 
     file.close()
-
