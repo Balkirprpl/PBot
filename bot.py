@@ -1,4 +1,5 @@
 from keys import key, client, user_agent
+from detect2 import scanAccount
 
 import praw
 import datetime
@@ -56,10 +57,6 @@ def display_info(user):
             c2 = comment_array[i2]
             z *= compare_text(c1, c2)
 
-
-    if z < 0.3:
-        z = f"{blue}Less than 0.3"
-    print(f"index of suspiciousty: {red}{z}{reset}")
     total_submissions = 0
     for submission in user.submissions.new(limit=None):
         total_submissions += 1
@@ -84,6 +81,21 @@ Is verified: {red}{user.verified}{reset}
 Total submissions: {red}{total_submissions}{reset}
 Total comments: {red}{total_comments}{reset}
 """)
+    if z > 0.3:
+        print(f"Index of suspiciousty (Result of detection method 1): {red}{z} (Likely Bot){reset}")
+    else:
+        print(f"Index of suspiciousty (Result of detection method 1): {blue}{z} (Not Likely Bot){reset}")
+
+    detect2_data = scanAccount(user.name, 50) # second detection algorithm
+    if detect2_data > 129:
+        print(f"""2nd Bot Detection Score: {red}{detect2_data} (Likely Bot){reset}""")
+    else:
+        print(f"""2nd Bot Detection Score: {blue}{detect2_data} (Not Likely Bot){reset}""")
+              
+    if ((detect2_data > 129 and z >= 0.3) or (detect2_data <= 129 and z < 0.3)):
+        print(f"""{blue}Agreement in Detection{reset}\n""")
+    else:
+        print(f"""{red}Disagreement in Detection{reset}\n""")
 
 
 def check_commentss(username):
@@ -123,9 +135,9 @@ if __name__ == "__main__":
                          client_secret=key,
                          user_agent=user_agent)
 
-    x = input("1.single search or 2.submission search (1/2)? ")
+    x = input("1. Single search or 2. Submission search (1/2)? ")
     if x == '1':
-        x = input("username or 0 to leave: ")
+        x = input("Username or 0 to leave: ")
         while x != '0':
             if '/u/' in x[0:3]:
                 print(x)
@@ -160,4 +172,3 @@ if __name__ == "__main__":
         exit()
 
     file.close()
-
