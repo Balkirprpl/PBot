@@ -32,13 +32,13 @@ def AnalyseAccount(user):
     weight = 0
     if totaldays == 0:
         return 20
-    if (totaldays < 31):  # an account less than 1 month old is sus
+    if totaldays < 31:  # an account less than 1 month old is sus
         weight += totaldays
     else:
-        if (user.comment_karma + user.link_karma < 100):
+        if user.comment_karma + user.link_karma < 100:
             weight += 10
     
-    if (not user.has_verified_email):
+    if not user.has_verified_email:
         weight += 50  # bots are less likely to have verified emails
     
     return weight
@@ -55,7 +55,7 @@ def AnalysePosts(user, PostLimit):
         postsAnalysed_count += 1
         UniqueTitle.add(post.title)
     
-    if (postsAnalysed_count > 0):
+    if postsAnalysed_count > 0:
         return 100 * (postsAnalysed_count - len(UniquePosts)) / postsAnalysed_count + 100 * (
                 postsAnalysed_count - len(UniqueTitle)) / postsAnalysed_count
     return 0
@@ -68,8 +68,8 @@ def TimeDifference(t1, t2, ReturnDays):
     
     date1 = datetime(d1.year, d1.month, d1.day, d1.hour, d1.minute, d1.second)
     date2 = datetime(d2.year, d2.month, d2.day, d2.hour, d2.minute, d2.second)
-    if (ReturnDays):  # return difference in days
-        return (abs(date2 - date1).days)
+    if ReturnDays:  # return difference in days
+        return abs(date2 - date1).days
     
     # return difference in time in seconds
     return abs(
@@ -95,33 +95,39 @@ def PostingInterval(user, NumberOfPostsAnalysed):
             time_interval.append(TimeDifference(previous_date, post.created_utc, 0))
             previous_date = post.created_utc
     
-    weight = 0
     if postsAnalysed_count > 0:
-        if len(days_interval) > 1:
-            # calculate variance for days_interval
-            mean_days_interval = sum(days_interval) / len(days_interval)
-            days_variance = 0
-            for i in range(0, len(days_interval)):
-                days_variance += (days_interval[i] - mean_days_interval) ** 2
-            days_variance /= (len(days_interval) - 1)
-            # print(days_interval)
-            # print(days_variance)
-            if (math.sqrt(days_variance) < 3):
-                weight += 20
-        
-        if len(time_interval) > 1:
-            # calculate variance for time_interval
-            mean_time_interval = sum(time_interval) / len(time_interval)
-            time_variance = 0;
-            for i in range(0, len(time_interval)):
-                time_variance += (time_interval[i] - mean_time_interval) ** 2
-            time_variance /= (len(time_interval) - 1)
-            # print(time_interval)
-            # print(time_variance)
-            
-            if (math.sqrt(time_variance) > 0):
-                weight += 400 / math.sqrt(time_variance)
+        weight = calulate_time_variance(days_interval, time_interval)
     
+    return weight
+
+
+def calulate_time_variance(days_interval, time_interval):
+    weight = 0
+    
+    if len(days_interval) > 1:
+        # calculate variance for days_interval
+        mean_days_interval = sum(days_interval) / len(days_interval)
+        days_variance = 0
+        for i in range(0, len(days_interval)):
+            days_variance += (days_interval[i] - mean_days_interval) ** 2
+        days_variance /= (len(days_interval) - 1)
+        # print(days_interval)
+        # print(days_variance)
+        if math.sqrt(days_variance) < 3:
+            weight += 20
+    if len(time_interval) > 1:
+        # calculate variance for time_interval
+        mean_time_interval = sum(time_interval) / len(time_interval)
+        time_variance = 0
+        
+        for i in range(0, len(time_interval)):
+            time_variance += (time_interval[i] - mean_time_interval) ** 2
+        time_variance /= (len(time_interval) - 1)
+        # print(time_interval)
+        # print(time_variance)
+        
+        if math.sqrt(time_variance) > 0:
+            weight += 400 / math.sqrt(time_variance)
     return weight
 
 
@@ -141,28 +147,7 @@ def CommentInterval(user, NumberOfPostsAnalysed):
             time_interval.append(TimeDifference(previous_date, comment.created_utc, 0))
             previous_date = comment.created_utc
     
-    weight = 0
-    # calculate variance for days_interval
-    if len(days_interval) > 1:
-        mean_days_interval = sum(days_interval) / len(days_interval)
-        days_variance = 0
-        for i in range(0, len(days_interval)):
-            days_variance += (days_interval[i] - mean_days_interval) ** 2
-        days_variance /= (len(days_interval) - 1)
-        if (math.sqrt(days_variance) < 3):
-            weight += 20
-    
-    # calculate variance for time_interval
-    if len(time_interval) > 1:
-        mean_time_interval = sum(time_interval) / len(time_interval)
-        time_variance = 0;
-        for i in range(0, len(time_interval)):
-            time_variance += (time_interval[i] - mean_time_interval) ** 2
-        time_variance /= (len(time_interval) - 1)
-        # print(time_interval)
-        # print(time_variance)
-        if (math.sqrt(time_variance) > 0):
-            weight += 400 / math.sqrt(time_variance)
+    weight = calulate_time_variance(days_interval, time_interval)
     
     return weight  # if weight=0, program cannot identify redditor's posting pattern
 
@@ -174,7 +159,7 @@ def AnalyseComments(user, NumberOfPostsAnalysed):
     for comment in user.comments.new(limit=NumberOfPostsAnalysed):
         UniqueComments.add(comment.body)
         CommentsAnalysed_count += 1
-    if (CommentsAnalysed_count > 0):
+    if CommentsAnalysed_count > 0:
         return 100 * (CommentsAnalysed_count - len(UniqueComments)) / CommentsAnalysed_count
     return 0
 
@@ -194,68 +179,103 @@ def BotScore(username, PostLimit):
     
     return totalscore
 
-
-def FindThresholdOfBotScore():
+def append_threshold_score(filename):
     PostLimit = 5  # upperbound for number of posts to be analysed for each account
     AccountLimit = 10  # upperbound for number of accounts to be analysed
+    score_list = []
     
-    AllBotScores = []
-    i = 0
-    with open("CleanRedditBot.txt") as file:
+    with open(filename) as file:
         for user in file:
-            if (i >= AccountLimit):
-                break
-            currentScore = BotScore(reddit.redditor(user), PostLimit)
-            AllBotScores.append((currentScore))
-            i += 1
-    file.close()
-    AllBotScores.sort()
+            for i in range(AccountLimit):
+                currentScore = BotScore(reddit.redditor(user), PostLimit)
+                score_list.append(currentScore)
+
+    return score_list
+
+
+def FindThresholdOfBotScore():
+    # PostLimit = 5  # upperbound for number of posts to be analysed for each account
+    # AccountLimit = 10  # upperbound for number of accounts to be analysed
+    #
+    # AllBotScores = []
+    # i = 0
+    # with open("CleanRedditBot.txt") as file:
+    #     for user in file:
+    #         if (i >= AccountLimit):
+    #             break
+    #         currentScore = BotScore(reddit.redditor(user), PostLimit)
+    #         AllBotScores.append((currentScore))
+    #         i += 1
+    # file.close()
+    
+    AllBotScores = append_threshold_score("CleanRedditBot.txt")
+    print_scores(AllBotScores)
+    
+    # AllHumanScores = []
+    # i = 0
+    # with open("CleanRedditor.txt") as file:
+    #     for user in file:
+    #         if (i >= AccountLimit):
+    #             break
+    #         currentScore = BotScore(reddit.redditor(user), PostLimit)
+    #         AllHumanScores.append((currentScore))
+    #         i += 1
+    # file.close()
+    
+    AllHumanScores = append_threshold_score("CleanRedditBot.txt")
+    print_scores(AllHumanScores)
+
+
+def print_scores(scores):
+    scores.sort()
     # print minimum median, mean, max
-    print(AllBotScores[0], AllBotScores[int(len(AllBotScores) / 2)], sum(AllBotScores) / len(AllBotScores),
-          AllBotScores[len(AllBotScores) - 1])
-    
-    AllHumanScores = []
-    i = 0
-    with open("CleanRedditor.txt") as file:
-        for user in file:
-            if (i >= AccountLimit):
-                break
-            currentScore = BotScore(reddit.redditor(user), PostLimit)
-            AllHumanScores.append((currentScore))
-            i += 1
-    file.close()
-    
-    AllHumanScores.sort()
-    print(AllHumanScores[0], AllHumanScores[int(len(AllHumanScores) / 2)], sum(AllHumanScores) / len(AllHumanScores),
-          AllHumanScores[len(AllHumanScores) - 1])
+    print(scores[0], scores[int(len(scores) / 2)], sum(scores) / len(scores),
+          scores[len(scores) - 1])
 
 
 def EvaluateAlgorithm():
     PostLimit = 60  # upperbound for number of posts to be analysed for each account
     AccountLimit = 900  # upperbound for number of accounts to be analysed
-    
-    i = 0
     correct = 0
+
     with open("CleanRedditBot.txt") as file:
         for user in file:
-            if (i >= AccountLimit):
-                break
-            if BotScore(reddit.redditor(user), PostLimit):
-                correct += 1
-            i += 1
-    file.close()
-    print(100 * correct / i)
+            for _ in range(AccountLimit):
+                if BotScore(reddit.redditor(user), PostLimit):
+                    correct += 1
+                    
+    print(100 * correct / AccountLimit)
     
-    j = 0
     with open("CleanRedditor.txt") as file:
         for user in file:
-            if (j >= AccountLimit):
-                break
-            if BotScore(reddit.redditor(user), PostLimit) == False:
-                correct += 1
-            j += 1
-    file.close()
-    print((100 * correct) / (i + j))
+            for _ in range(AccountLimit):
+                if not BotScore(reddit.redditor(user), PostLimit):
+                    correct += 1
+
+    print((100 * correct) / (AccountLimit * 2))
+    
+    # i = 0
+    # correct = 0
+    # with open("CleanRedditBot.txt") as file:
+    #     for user in file:
+    #         if i >= AccountLimit:
+    #             break
+    #         if BotScore(reddit.redditor(user), PostLimit):
+    #             correct += 1
+    #         i += 1
+    # file.close()
+    # print(100 * correct / i)
+    
+    # j = 0
+    # with open("CleanRedditor.txt") as file:
+    #     for user in file:
+    #         if j >= AccountLimit:
+    #             break
+    #         if not BotScore(reddit.redditor(user), PostLimit):
+    #             correct += 1
+    #         j += 1
+    # file.close()
+    # print((100 * correct) / (i + j))
 
 
 def scanAccount(username, post_count):

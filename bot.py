@@ -20,8 +20,8 @@ cyan = '\033[36m'
 
 
 def load_bad_words():
-    with open("bad-words.txt", 'r', encoding='utf-8') as file:
-        bad_words = set(word.strip().lower() for word in file.readlines())
+    with open("bad-words.txt", 'r', encoding='utf-8') as f:
+        bad_words = set(word.strip().lower() for word in f.readlines())
         return bad_words
 
 
@@ -62,9 +62,6 @@ class Bot:
     def update_scores(self, new_sim, new_lda):
         self.sim_score = new_sim
         self.lda_score = new_lda
-    
-    def set_user(self, user):
-        self.user = user
 
 
 def compare_text(text1, text2):
@@ -137,18 +134,18 @@ def display_info(user):
     # ------------------------------
     #   Calculating txt similarity
     # ------------------------------
-    z = 1.0
+    z_score = 1.0
     l = len(comment_similarity_array)
     for i1 in range(l):
         for i2 in range(i1 + 1, l):
             c1 = comment_similarity_array[i1]
             c2 = comment_similarity_array[i2]
-            z *= compare_text(c1, c2)
+            z_score *= compare_text(c1, c2)
     
-    if z > 0.3:
-        print(f"Index of suspiciousty (Result of detection method 1): {red}{z} (Likely Bot){reset}")
+    if z_score > 0.3:
+        print(f"Index of suspiciously (Result of detection method 1): {red}{z_score} (Likely Bot){reset}")
     else:
-        print(f"Index of suspiciousty (Result of detection method 1): {blue}{z} (Not Likely Bot){reset}")
+        print(f"Index of suspiciously (Result of detection method 1): {blue}{z_score} (Not Likely Bot){reset}")
     
     # -----------------------------
     #   Analysing account data
@@ -167,8 +164,8 @@ def display_info(user):
     if z >= 0.3 or detect2_data >= 130:
         print(f"Initiating further analysis")
         bot = Bot(data)
-        bot.update_scores(z, detect2_data)
-        bot.set_user(user)
+        bot.update_scores(z_score, detect2_data)
+        bot.user = user
         further_analysis(bot)
 
 
@@ -222,7 +219,7 @@ def count_bad_words(bot):
     for comment in comments:
         # split comment into all comments
         comment_words = comment.body.lower().replace('|', ' ').split()
-        # sum all the occurences of a bad word in the comment
+        # sum all the occurrences of a bad word in the comment
         for word in comment_words:
             if word in BAD_WORDS_SET:
                 bad_word_count += 1
@@ -236,12 +233,12 @@ def is_shortened_link(url):
     return domain in SHORT_LINKS
 
 
-def check_commentss(username):
+def check_comments(username):
     user = reddit.redditor(username)
     for comments in user.comments.new(limit=None):
         print(comments.body)
     print(f"checking comments for user {user.name}")
-    z = 1.0
+    z_score = 1.0
     seen = False
     for comments in user.comments.new(limit=5):
         print(comments.body)
@@ -265,7 +262,7 @@ def find_info(ids, depth):
         # except RequestException:
         #    print("Request error occurred")
         # except Exception as e:
-        #    print(f"Exception {e} ocurred")
+        #    print(f"Exception {e} occurred")
 
 
 def check_account_age(username):
