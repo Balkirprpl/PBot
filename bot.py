@@ -53,6 +53,10 @@ class Bot:
         self.sim_score = -1
         self.lda_score = -1
 
+        self.reasons= []
+
+        self.good_bot = False
+
     def update_scores(self, new_sim, new_lda):
         self.sim_score = new_sim
         self.lda_score = new_lda
@@ -60,6 +64,28 @@ class Bot:
     def set_user(self, user):
         self.user = user
 
+    def add_reason(self, reason):
+        self.reasons.append(reason)
+
+    def get_reasons(self):
+        return self.reasons
+
+    def set_good(self):
+        self.good_bot = True
+
+    def print_bot(self):
+        print(f"""Username: {cyan}{self.name}{reset}
+Id: {green}{self.ID}{reset}
+Link Karma: {blue}{self.link_karma}{reset}
+Comment Karma: {blue}{self.comment_karma}{reset}
+Total Karma: {yellow}{self.total_karma}{reset}
+Account age: {yellow}{self.birth}{reset}
+Is verified: {yellow}{self.verified}{reset}
+Total submissions: {yellow}{self.n_submissions}{reset}
+Total comments: {yellow}{self.n_comments}{reset}
+{'Detected reasons: '+ red if len(self.reasons) > 0 else ''}
+{self.reasons if len(self.reasons) > 0 else ''}
+{green + 'This is a good bot' + reset if self.good_bot else reset}""")
 
 
 
@@ -125,6 +151,10 @@ def display_info(user):
     add_to_db(data)
     print_account(data)
 
+    account = Bot(data)
+    print("Before Analysis:")
+    account.print_bot()
+
     # ------------------------------
     #   Calculating txt similarity
     # ------------------------------
@@ -161,6 +191,8 @@ def display_info(user):
         bot.update_scores(z, detect2_data)
         bot.set_user(user)
         further_analysis(bot)
+        print("After Analisys")
+        bot.print_bot()
 
 def check_links(bot):
     n_links = 0
@@ -194,14 +226,24 @@ def further_analysis(bot):
     # possible fishing bot
     n_links, n_short_links = check_links(bot)
     print(f"{bot.name} has {n_links} links and {n_short_links} short links")
+    if n_short_links > 0:
+        bot.add_reason(f"{bot.name}:{bot.ID} was caught sending shortened links")
 
     # checking for profanity
+    # possible harrasing bot
     profanity = count_bad_words(bot)
+    if profanity >= 500:
+        bot.add_reason(f"{bot.name}:{bot.ID} was caught harrassing")
     print(f"This account cussed {profanity} times")
 
     # checking opt-out or autodeclared bot
+    # checking for good bots
     declared_bot = is_declared_bot(bot)
+    if declared_bot:
+        bot.set_good()
     print(f"is this acc a autodeclared bot? {declared_bot}")
+
+    print()
 
 def count_bad_words(bot):
     comments = bot.user.comments.new(limit=None)
