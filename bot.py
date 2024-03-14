@@ -5,6 +5,7 @@ import re
 
 import praw
 import spacy
+import numpy as np
 
 from detect2 import scanAccount
 from keys import key, client, user_agent
@@ -34,6 +35,7 @@ BAD_WORDS_SET = load_bad_words()
 
 file = open(DATABASE, mode='a', newline='')
 db = csv.writer(file)
+
 if os.path.getsize(DATABASE) == 0:
     headers = ['user_id', 'username', 'link_karma', 'comment_karma', 'created', 'verified', 'submissions', 'comments']
     db.writerow(headers)
@@ -52,6 +54,7 @@ class Bot:
         self.verified = data[6]
         self.n_submissions = data[7]
         self.n_comments = data[8]
+        self.user = None
         
         self.sim_score = -1
         self.lda_score = -1
@@ -265,12 +268,60 @@ def find_info(ids, depth):
         #    print(f"Exception {e} ocurred")
 
 
+def check_account_age(username):
+    redditor = reddit.redditor(username)
+    current_time = datetime.datetime.now()
+    account_age = current_time - datetime.datetime.utcfromtimestamp(redditor.created_utc)
+    
+    if account_age < datetime.timedelta(days=30):
+        return 5
+    elif account_age < datetime.timedelta(days=7):
+        return 10
+    else:
+        return 0
+
+
+def check_account_response_time(username):
+    redditor = reddit.redditor(username)
+    response_times = []
+    lengthy_quick_responses = []
+    
+    for comment in redditor.comments.new(limit=None):
+        parent = comment.parent()
+        if isinstance(parent, praw.models.Comment):
+            response_time = comment.created_utc - parent.created_utc
+            response_times.append(response_time)
+            if response_time < 60 and len(comment.body) > 150:
+                lengthy_quick_responses.append(comment)
+    
+    if response_times:
+        mean_response = np.mean(response_times)
+        std_dev_response = np.std(response_times)
+        quick_response = mean_response - std_dev_response
+        
+        quick_responses = [time for time in response_times if time < quick_response]
+        
+        if len(quick_responses) > len(response_times) * 0.2:  # If >20% of responses are below threshold
+            print("This account may be exhibiting bot-like behavior due to frequent quick responses.")
+        
+        if std_dev_response > 600:
+            return 0
+        elif std_dev_response < 200:
+            return 5
+        
+
+
 if __name__ == "__main__":
     # Initialize the Reddit API client
-    reddit = praw.Reddit(client_id=client,
-                         client_secret=key,
-                         user_agent=user_agent)
+    reddit = praw.Reddit(
+        client_id = client,
+        client_secret = key,
+        user_agent = user_agent
+    )
+    
     load_bad_words()
+    
+    # TODO Better variable names. Maybe rewrite to use cmd, argparse or some other builtin like dictionaries.
     x = input("1. Single search or 2. Submission search (1/2)? ")
     if x == '1':
         x = input("Username or 0 to leave: ")
@@ -295,11 +346,11 @@ if __name__ == "__main__":
     posts = []
     try:
         if z.lower() == 'n':
-            posts = reddit.subreddit(x).new(limit=y)
+            posts = reddit.subreddit(x).new(limit = y)
         if z.lower() == 'h':
-            posts = reddit.subreddit(x).hot(limit=y)
+            posts = reddit.subreddit(x).hot(limit = y)
         if z.lower() == 't':
-            posts = reddit.subreddit(x).top(limit=y)
+            posts = reddit.subreddit(x).top(limit = y)
         depth = int(input("Depth: "))
         post_ids = [post.id for post in posts]
         find_info(post_ids, depth)
