@@ -1,12 +1,13 @@
-from keys import key, client, user_agent
-from detect2 import scanAccount
-
-import praw
-import datetime
 import csv
+import datetime
 import os
 import re
+
+import praw
 import spacy
+
+from detect2 import scanAccount
+from keys import key, client, user_agent
 
 reset = '\033[37m'
 red = '\033[31m'
@@ -16,27 +17,29 @@ blue = '\033[34m'
 purple = '\033[35m'
 cyan = '\033[36m'
 
+
 def load_bad_words():
     with open("bad-words.txt", 'r', encoding='utf-8') as file:
         bad_words = set(word.strip().lower() for word in file.readlines())
         return bad_words
 
+
 DATABASE = "database.csv"
 COMMENT_DEPTH = 5
 SHORT_LINKS = [
-        'bit.ly', 'tinyurl.com', 'goo.gl', 't.co', 'ow.ly', 'buff.ly',
-        'adf.ly', 'is.gd', 'cutt.ly', 'shorte.st'
-        ]
+    'bit.ly', 'tinyurl.com', 'goo.gl', 't.co', 'ow.ly', 'buff.ly',
+    'adf.ly', 'is.gd', 'cutt.ly', 'shorte.st'
+]
 BAD_WORDS_SET = load_bad_words()
 
 file = open(DATABASE, mode='a', newline='')
 db = csv.writer(file)
 if os.path.getsize(DATABASE) == 0:
-    headers = ['user_id','username','link_karma','comment_karma','created','verified','submissions','comments']
+    headers = ['user_id', 'username', 'link_karma', 'comment_karma', 'created', 'verified', 'submissions', 'comments']
     db.writerow(headers)
 
-
 nlp = spacy.load("en_core_web_md")
+
 
 class Bot:
     def __init__(self, data):
@@ -49,56 +52,31 @@ class Bot:
         self.verified = data[6]
         self.n_submissions = data[7]
         self.n_comments = data[8]
-
+        
         self.sim_score = -1
         self.lda_score = -1
-
-        self.reasons= []
-
-        self.good_bot = False
-
+    
     def update_scores(self, new_sim, new_lda):
         self.sim_score = new_sim
         self.lda_score = new_lda
-
+    
     def set_user(self, user):
         self.user = user
-
-    def add_reason(self, reason):
-        self.reasons.append(reason)
-
-    def get_reasons(self):
-        return self.reasons
-
-    def set_good(self):
-        self.good_bot = True
-
-    def print_bot(self):
-        print(f"""Username: {cyan}{self.name}{reset}
-Id: {green}{self.ID}{reset}
-Link Karma: {blue}{self.link_karma}{reset}
-Comment Karma: {blue}{self.comment_karma}{reset}
-Total Karma: {yellow}{self.total_karma}{reset}
-Account age: {yellow}{self.birth}{reset}
-Is verified: {yellow}{self.verified}{reset}
-Total submissions: {yellow}{self.n_submissions}{reset}
-Total comments: {yellow}{self.n_comments}{reset}
-{'Detected reasons: '+ red if len(self.reasons) > 0 else ''}
-{self.reasons if len(self.reasons) > 0 else ''}
-{green + 'This is a good bot' + reset if self.good_bot else reset}""")
-
 
 
 def compare_text(text1, text2):
     similarity = nlp(text1).similarity(nlp(text2))
     return similarity
 
+
 def check_comments(user):
     for comments in user.comments.new(limit=None):
         print(comments.body)
 
+
 def add_to_db(data):
     db.writerow(data)
+
 
 def print_account(data):
     print(f"""Username: {cyan}{data[1]}{reset}
@@ -112,21 +90,23 @@ Total submissions: {yellow}{data[7]}{reset}
 Total comments: {yellow}{data[8]}{reset}
 """)
 
+
 def find_links(text):
     pattern = r'\b(?:http://|https://|www\.|goo\.gl/|tinyurl\.com/|bit\.ly/)\S+\.\S+'
     links = re.findall(pattern, text)
     return links
 
+
 def display_info(user):
-    #check_comments(user)
-    #user = reddit.redditor(username)
+    # check_comments(user)
+    # user = reddit.redditor(username)
     created = datetime.datetime.fromtimestamp(user.created_utc)
     created = created.strftime("%d/%m/%y")
     total_comments = 0
     comment_similarity_array = []
     links_array = []
     all_comments = user.comments.new(limit=None)
-
+    
     for comments in all_comments:
         # print(f"links: {find_links(comments.body)}")
         # make a request to see if the link is shortened?
@@ -135,7 +115,7 @@ def display_info(user):
         if total_comments < COMMENT_DEPTH and "://www." not in comments.body:
             comment_similarity_array.append(comments.body)
         total_comments += 1
-
+    
     total_submissions = 0
     for submission in user.submissions.new(limit=None):
         total_submissions += 1
@@ -150,11 +130,7 @@ def display_info(user):
             total_comments]
     add_to_db(data)
     print_account(data)
-
-    account = Bot(data)
-    print("Before Analysis:")
-    account.print_bot()
-
+    
     # ------------------------------
     #   Calculating txt similarity
     # ------------------------------
@@ -165,34 +141,33 @@ def display_info(user):
             c1 = comment_similarity_array[i1]
             c2 = comment_similarity_array[i2]
             z *= compare_text(c1, c2)
-
+    
     if z > 0.3:
         print(f"Index of suspiciousty (Result of detection method 1): {red}{z} (Likely Bot){reset}")
     else:
         print(f"Index of suspiciousty (Result of detection method 1): {blue}{z} (Not Likely Bot){reset}")
-
+    
     # -----------------------------
     #   Analysing account data
     # -----------------------------
-    detect2_data = scanAccount(user.name, 50) # second detection algorithm
+    detect2_data = scanAccount(user.name, 50)  # second detection algorithm
     if detect2_data > 129:
         print(f"""2nd Bot Detection Score: {red}{detect2_data} (Likely Bot){reset}""")
     else:
         print(f"""2nd Bot Detection Score: {blue}{detect2_data} (Not Likely Bot){reset}""")
-
-    if ((detect2_data > 129 and z >= 0.3) or (detect2_data <= 129 and z < 0.3)):
+    
+    if (detect2_data > 129 and z >= 0.3) or (detect2_data <= 129 and z < 0.3):
         print(f"""{green}Agreement in Detection{reset}\n""")
     else:
         print(f"""{red}Disagreement in Detection{reset}\n""")
-
+    
     if z >= 0.3 or detect2_data >= 130:
         print(f"Initiating further analysis")
         bot = Bot(data)
         bot.update_scores(z, detect2_data)
         bot.set_user(user)
         further_analysis(bot)
-        print("After Analisys")
-        bot.print_bot()
+
 
 def check_links(bot):
     n_links = 0
@@ -212,6 +187,7 @@ def check_links(bot):
                     n_short_links += 1
         return n_links, n_short_links
 
+
 def is_declared_bot(bot):
     auto_declared = False
     if 'bot' in bot.name.lower():
@@ -221,42 +197,35 @@ def is_declared_bot(bot):
             auto_declared = True
     return auto_declared
 
+
 def further_analysis(bot):
     # checking for shortened links in comments
     # possible fishing bot
     n_links, n_short_links = check_links(bot)
     print(f"{bot.name} has {n_links} links and {n_short_links} short links")
-    if n_short_links > 0:
-        bot.add_reason(f"{bot.name}:{bot.ID} was caught sending shortened links")
-
+    
     # checking for profanity
-    # possible harrasing bot
     profanity = count_bad_words(bot)
-    if profanity >= 500:
-        bot.add_reason(f"{bot.name}:{bot.ID} was caught harrassing")
     print(f"This account cussed {profanity} times")
-
+    
     # checking opt-out or autodeclared bot
-    # checking for good bots
     declared_bot = is_declared_bot(bot)
-    if declared_bot:
-        bot.set_good()
     print(f"is this acc a autodeclared bot? {declared_bot}")
 
-    print()
 
 def count_bad_words(bot):
     comments = bot.user.comments.new(limit=None)
     bad_word_count = 0
     for comment in comments:
         # split comment into all comments
-        comment_words = comment.body.lower().replace('|',' ').split()
+        comment_words = comment.body.lower().replace('|', ' ').split()
         # sum all the occurences of a bad word in the comment
         for word in comment_words:
             if word in BAD_WORDS_SET:
                 bad_word_count += 1
-
+    
     return bad_word_count
+
 
 def is_shortened_link(url):
     from urllib.parse import urlparse
@@ -277,7 +246,7 @@ def check_commentss(username):
 
 def find_info(ids, depth):
     for i in ids:
-        #try:
+        # try:
         if 1 == 1:
             submission = reddit.submission(id=i)
             print(f"Submission: {submission.url}")
@@ -286,14 +255,15 @@ def find_info(ids, depth):
                 if comment.author:
                     author = comment.author
                     user = reddit.redditor(author)
-                    #for c in user.comments.new(limit=5):
+                    # for c in user.comments.new(limit=5):
                     #    print(1)
-                    #check_comments(author)
+                    # check_comments(author)
                     display_info(user)
-        #except RequestException:
+        # except RequestException:
         #    print("Request error occurred")
-        #except Exception as e:
+        # except Exception as e:
         #    print(f"Exception {e} ocurred")
+
 
 if __name__ == "__main__":
     # Initialize the Reddit API client
@@ -315,14 +285,14 @@ if __name__ == "__main__":
             except Exception as e:
                 print(f"{red}Error While finding user {blue}{x}{reset}\n{e}")
             x = input(">>> ")
-
+        
         exit()
-    #Fetch the top posts from the "programming" subreddit
+    # Fetch the top posts from the "programming" subreddit
     x = input("What subreddit you want to look at? ")
     z = input("New, Hot or top submissions? (N/H/T) ")
     y = int(input("How many posts to retrieve? "))
-
-    posts =[]
+    
+    posts = []
     try:
         if z.lower() == 'n':
             posts = reddit.subreddit(x).new(limit=y)
@@ -336,5 +306,5 @@ if __name__ == "__main__":
     except Exception as e:
         print(f"{red}Error while fetching posts. Exiting.{reset}\n{e}")
         exit()
-
+    
     file.close()
