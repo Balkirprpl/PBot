@@ -191,7 +191,7 @@ def display_info(user):
         bot.update_scores(z, detect2_data)
         bot.set_user(user)
         further_analysis(bot)
-        print("After Analisys")
+        print("After Analysis")
         bot.print_bot()
 
 def check_links(bot):
@@ -225,7 +225,7 @@ def further_analysis(bot):
     # checking for shortened links in comments
     # possible fishing bot
     n_links, n_short_links = check_links(bot)
-    print(f"{bot.name} has {n_links} links and {n_short_links} short links")
+    print(f"{bot.name} has {n_links} links and {n_short_links} shortened links")
     if n_short_links > 0:
         bot.add_reason(f"{bot.name}:{bot.ID} was caught sending shortened links")
 
@@ -233,15 +233,15 @@ def further_analysis(bot):
     # possible harrasing bot
     profanity = count_bad_words(bot)
     if profanity >= 500:
-        bot.add_reason(f"{bot.name}:{bot.ID} was caught harrassing")
-    print(f"This account cussed {profanity} times")
+        bot.add_reason(f"{bot.name}:{bot.ID} was caught possibly harrassing another user")
+    print(f"This account has used profanity {profanity} times")
 
     # checking opt-out or autodeclared bot
     # checking for good bots
     declared_bot = is_declared_bot(bot)
     if declared_bot:
         bot.set_good()
-    print(f"is this acc a autodeclared bot? {declared_bot}")
+    print(f"is this account a autodeclared bot? {declared_bot}")
 
     print()
 
