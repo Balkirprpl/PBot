@@ -16,10 +16,13 @@ blue = '\033[34m'
 purple = '\033[35m'
 cyan = '\033[36m'
 
+current_scan = []
+
 def load_bad_words():
     with open("bad-words.txt", 'r', encoding='utf-8') as file:
         bad_words = set(word.strip().lower() for word in file.readlines())
         return bad_words
+
 
 DATABASE = "database.csv"
 COMMENT_DEPTH = 5
@@ -93,7 +96,7 @@ def compare_text(text1, text2):
     similarity = nlp(text1).similarity(nlp(text2))
     return similarity
 
-def check_comments(user):
+def print_comments(user):
     for comments in user.comments.new(limit=None):
         print(comments.body)
 
@@ -117,9 +120,8 @@ def find_links(text):
     links = re.findall(pattern, text)
     return links
 
-def display_info(user):
-    #check_comments(user)
-    #user = reddit.redditor(username)
+def check_info(user):
+    #print_comments(user)
     created = datetime.datetime.fromtimestamp(user.created_utc)
     created = created.strftime("%d/%m/%y")
     total_comments = 0
@@ -127,6 +129,7 @@ def display_info(user):
     links_array = []
     all_comments = user.comments.new(limit=None)
 
+    # calculating n of links and n of commens
     for comments in all_comments:
         # print(f"links: {find_links(comments.body)}")
         # make a request to see if the link is shortened?
@@ -139,6 +142,7 @@ def display_info(user):
     total_submissions = 0
     for submission in user.submissions.new(limit=None):
         total_submissions += 1
+
     data = [user.id,
             user.name,
             user.link_karma,
@@ -148,13 +152,20 @@ def display_info(user):
             user.verified,
             total_submissions,
             total_comments]
+
     add_to_db(data)
-    print_account(data)
-
+    #print_account(data)
     account = Bot(data)
-    print("Before Analysis:")
-    account.print_bot()
 
+
+    # checks if user is found in bots.txt
+    known = is_known_bot(user.name)
+
+    if not known:
+        print("Before Analysis:")
+        account.print_bot()
+    else:
+        print(f"{cyan}{account.name}{green} is a known bot{reset}")
     # ------------------------------
     #   Calculating txt similarity
     # ------------------------------
@@ -175,6 +186,7 @@ def display_info(user):
     #   Analysing account data
     # -----------------------------
     detect2_data = scanAccount(user.name, 50) # second detection algorithm
+
     if detect2_data > 129:
         print(f"""2nd Bot Detection Score: {red}{detect2_data} (Likely Bot){reset}""")
     else:
@@ -187,12 +199,15 @@ def display_info(user):
 
     if z >= 0.3 or detect2_data >= 130:
         print(f"Initiating further analysis")
-        bot = Bot(data)
-        bot.update_scores(z, detect2_data)
-        bot.set_user(user)
-        further_analysis(bot)
+        account.update_scores(z, detect2_data)
+        account.set_user(user)
+        further_analysis(account)
+        current_scan.append(account)
         print("After Analysis")
-        bot.print_bot()
+        account.print_bot()
+    else:
+        print(f"{green}{user.name} not found as a bot{reset}")
+
 
 def check_links(bot):
     n_links = 0
@@ -220,6 +235,14 @@ def is_declared_bot(bot):
         if 'i am a bot' in comment.body.lower():
             auto_declared = True
     return auto_declared
+
+def is_known_bot(username):
+    with open('lists/bots.txt', 'r') as file:
+        if any(username in line for line in file):
+            return True # bot found in the list of bots
+        else:
+            return False
+
 
 def further_analysis(bot):
     # checking for shortened links in comments
@@ -277,8 +300,8 @@ def check_commentss(username):
 
 def find_info(ids, depth):
     for i in ids:
-        #try:
-        if 1 == 1:
+        try:
+        #if 1 == 1:
             submission = reddit.submission(id=i)
             print(f"Submission: {submission.url}")
             submission.comments.replace_more(limit=depth)
@@ -286,55 +309,74 @@ def find_info(ids, depth):
                 if comment.author:
                     author = comment.author
                     user = reddit.redditor(author)
-                    #for c in user.comments.new(limit=5):
-                    #    print(1)
-                    #check_comments(author)
-                    display_info(user)
-        #except RequestException:
-        #    print("Request error occurred")
-        #except Exception as e:
-        #    print(f"Exception {e} ocurred")
+                    check_info(user)
+        except RequestException:
+            print("Request error occurred")
+        except Exception as e:
+            print(f"Exception {e} ocurred")
+
+def options(reddit):
+    x = input("1. Single search or 2. Submission search (1/2)? ")
+    x = x.rstrip()
+    if x == '1':
+        count = 0
+        x = input("Username or 0 to leave: ")
+        while x.rstrip() != '0':
+            if '/u/' in x[0:3]:
+                x = x[3:]
+            try:
+                count += 1
+                user = reddit.redditor(x)
+                check_info(user)
+            except (KeyboardInterrupt, EOFError):
+                print(f"{red}Exitting\n{yellow}found {len(current_scan)} possible bots out of {count} accounts\n{reset}")
+                for account in current_scan:
+                    print(f"{account.name=} {account.sim_score=} {account.lda_score=}")
+                    if len(account.reasons) > 0:
+                        print(f"{red}{account.reasons=}{reset}")
+                    if account.good_bot:
+                        print(f"{green}Autodeclared bot{reset}")
+                exit()
+            except Exception as e:
+                print(f"{red}Error While finding user {blue}{x}{reset}\n{e}")
+            x = input(">>> ")
+        print(f"{green}Finishing search.\n{yellow}Found {len(current_scan)} bots out of {count} accounts\n{reset}")
+        for account in current_scan:
+            print(f"{account.name=} {account.sim_score=} {account.lda_score=}")
+            if len(account.reasons) > 0:
+                print(f"{red}{account.reasons=}{reset}")
+            if account.good_bot:
+                print(f"{green}Autodeclared bot{reset}")
+        exit()
+
+    elif x == '2':
+        subreddit = input("What subreddit you want to look at? ")
+        z = input("New, Hot or top submissions? (N/H/T) ")
+        y = int(input("How many posts to retrieve? "))
+
+        posts =[]
+        try:
+            if z.lower() == 'n':
+                posts = reddit.subreddit(subreddit).new(limit=y)
+            if z.lower() == 'h':
+                posts = reddit.subreddit(subreddit).hot(limit=y)
+            if z.lower() == 't':
+                posts = reddit.subreddit(subreddit).top(limit=y)
+            depth = int(input("Depth: "))
+            post_ids = [post.id for post in posts]
+            find_info(post_ids, depth)
+        except Exception as e:
+            print(f"{red}Error while fetching posts. Exiting.{reset}\n{e}")
+            exit()
+    else:
+        print(f"No option {x} defined.\n\n")
+        options(reddit)
+
 
 if __name__ == "__main__":
     # Initialize the Reddit API client
     reddit = praw.Reddit(client_id=client,
                          client_secret=key,
                          user_agent=user_agent)
-    load_bad_words()
-    x = input("1. Single search or 2. Submission search (1/2)? ")
-    if x == '1':
-        x = input("Username or 0 to leave: ")
-        while x != '0':
-            if '/u/' in x[0:3]:
-                print(x)
-                x = x[3:]
-                print(x)
-            try:
-                user = reddit.redditor(x)
-                display_info(user)
-            except Exception as e:
-                print(f"{red}Error While finding user {blue}{x}{reset}\n{e}")
-            x = input(">>> ")
+    options(reddit)
 
-        exit()
-    #Fetch the top posts from the "programming" subreddit
-    x = input("What subreddit you want to look at? ")
-    z = input("New, Hot or top submissions? (N/H/T) ")
-    y = int(input("How many posts to retrieve? "))
-
-    posts =[]
-    try:
-        if z.lower() == 'n':
-            posts = reddit.subreddit(x).new(limit=y)
-        if z.lower() == 'h':
-            posts = reddit.subreddit(x).hot(limit=y)
-        if z.lower() == 't':
-            posts = reddit.subreddit(x).top(limit=y)
-        depth = int(input("Depth: "))
-        post_ids = [post.id for post in posts]
-        find_info(post_ids, depth)
-    except Exception as e:
-        print(f"{red}Error while fetching posts. Exiting.{reset}\n{e}")
-        exit()
-
-    file.close()
