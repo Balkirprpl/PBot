@@ -7,6 +7,7 @@ import csv
 import os
 import re
 import spacy
+import warnings
 
 reset = '\033[37m'
 red = '\033[31m'
@@ -17,6 +18,8 @@ purple = '\033[35m'
 cyan = '\033[36m'
 
 current_scan = []
+
+warnings.filterwarnings('ignore', category=UserWarning)
 
 def load_bad_words():
     with open("bad-words.txt", 'r', encoding='utf-8') as file:
@@ -120,6 +123,20 @@ def find_links(text):
     links = re.findall(pattern, text)
     return links
 
+def scan_comments(comment_similarity_array):
+    # ------------------------------
+    #   Calculating txt similarity
+    # ------------------------------
+    z = 1.0
+    l = len(comment_similarity_array)
+    for i1 in range(l):
+        for i2 in range(i1 + 1, l):
+            c1 = comment_similarity_array[i1]
+            c2 = comment_similarity_array[i2]
+            z *= compare_text(c1, c2)
+
+    return z
+
 def check_info(user):
     #print_comments(user)
     created = datetime.datetime.fromtimestamp(user.created_utc)
@@ -162,19 +179,11 @@ def check_info(user):
     known = is_known_bot(user.name)
 
     if known:
-        print(f"{cyan}{account.name}{green} has been found in the list.{reset}")
-    account.print_bot()
-    # ------------------------------
-    #   Calculating txt similarity
-    # ------------------------------
-    z = 1.0
-    l = len(comment_similarity_array)
-    for i1 in range(l):
-        for i2 in range(i1 + 1, l):
-            c1 = comment_similarity_array[i1]
-            c2 = comment_similarity_array[i2]
-            z *= compare_text(c1, c2)
+        print(f"{cyan}{account.name}{green} has been found in the list.{reset}\n")
 
+    account.print_bot()
+
+    z = scan_comments(comment_similarity_array)
     if z > 0.3:
         print(f"1st Bot Detection Score: {red}{z} (Likely Bot){reset}")
     else:
@@ -211,7 +220,6 @@ def check_links(bot):
     n_links = 0
     n_short_links = 0
     all_comments = bot.user.comments.new(limit=None)
-    print("checking links")
     for comment in all_comments:
         # print(f"links: {find_links(comments.body)}")
         # algorithm to check shortened links done but
@@ -241,10 +249,13 @@ def is_known_bot(username):
         else:
             return False
 
+def decide():
+    print("hmm what to do")
 
 def further_analysis(bot):
     # checking for shortened links in comments
     # possible fishing bot
+    print(f"{blue}Checking links.{reset}")
     n_links, n_short_links = check_links(bot)
     print(f"{bot.name} has {n_links} links and {n_short_links} shortened links")
     if n_short_links > 0 or n_links > 1:
@@ -252,17 +263,18 @@ def further_analysis(bot):
 
     # checking for profanity
     # possible harrasing bot
+    print(f"Checking for profanity.")
     profanity = count_bad_words(bot)
+    print(f"This account has used profanity {profanity} times")
     if profanity >= 300:
         bot.add_reason(f"{bot.name}:{bot.ID} was caught possibly harrassing another user")
-    print(f"This account has used profanity {profanity} times")
 
     # checking opt-out or autodeclared bot
     # checking for good bots
     declared_bot = is_declared_bot(bot)
+    print(f"is this account a autodeclared bot? {blue+str(declared_bot)+reset if declared_bot else red+str(declared_bot)+reset }")
     if declared_bot:
         bot.set_good()
-    print(f"is this account a autodeclared bot? {declared_bot}")
     print()
 
 def count_bad_words(bot):
@@ -318,25 +330,27 @@ def options(reddit):
     if x == '1':
         count = 0
         x = input("Username or 0 to leave: ")
-        while x.rstrip() != '0':
-            if '/u/' in x[0:3]:
-                x = x[3:]
-            try:
-                count += 1
-                user = reddit.redditor(x)
-                check_info(user)
-            except (KeyboardInterrupt, EOFError):
-                print(f"{red}Exitting\n{yellow}found {len(current_scan)} possible bots out of {count} accounts\n{reset}")
-                for account in current_scan:
-                    print(f"{account.name=} {account.sim_score=} {account.lda_score=}")
-                    if len(account.reasons) > 0:
-                        print(f"{red}{account.reasons=}{reset}")
-                    if account.good_bot:
-                        print(f"{green}Autodeclared bot{reset}")
-                exit()
-            except Exception as e:
-                print(f"{red}Error While finding user {blue}{x}{reset}\n{e}")
-            x = input(">>> ")
+        try:
+            while x.rstrip() != '0':
+                if '/u/' in x[0:3]:
+                    x = x[3:]
+                try:
+                    count += 1
+                    user = reddit.redditor(x)
+                    check_info(user)
+                except Exception as e:
+                    print(f"{red}Error While finding user {blue}{x}{reset}\n{e}")
+                x = input(">>> ")
+        except (KeyboardInterrupt, EOFError):
+            print(f"{red}Exitting\n{yellow}found {len(current_scan)} possible bots out of {count} accounts\n{reset}")
+            for account in current_scan:
+                print(f"{account.name=}:{account.sim_score=}:{account.lda_score=}")
+                if len(account.reasons) > 0:
+                    print(f"{red}{account.name=}:{account.reasons=}{reset}")
+                if account.good_bot:
+                    print(f"{green}{account.name=}:{account.good_bot=}{reset}")
+            exit()
+
         print(f"{green}Finishing search.\n{yellow}Found {len(current_scan)} bots out of {count} accounts\n{reset}")
         for account in current_scan:
             print(f"{account.name=} {account.sim_score=} {account.lda_score=}")
