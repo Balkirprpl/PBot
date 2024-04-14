@@ -187,6 +187,7 @@ def check_info(user):
 
     account.print_bot()
 
+
     z = scan_comments(comment_similarity_array)
     if z > 0.3:
         print(f"1st Bot Detection Score: {red}{z} (Likely Bot){reset}")
@@ -264,7 +265,7 @@ def further_analysis(bot):
 
     # checking for profanity
     # possible harrasing bot
-    print(f"Checking for profanity.")
+    print(f"{blue}Checking for profanity.{reset}")
     profanity = count_bad_words(bot)
     print(f"This account has used profanity {profanity} times")
     if profanity >= 300:
@@ -342,15 +343,31 @@ def options(reddit):
                     check_info(user)
                 except Exception as e:
                     print(f"{red}Error While finding user {blue}{x}{reset}\n{e}")
-                x = input(">>> ")
+                x = input("Username or 0 to leave: ")
             print(f"{green}Finishing search.\n{yellow}Found {len(current_scan)} bots out of {count} accounts\n{reset}")
             for account in current_scan:
                 print(f"{account.name=} {account.sim_score=} {account.lda_score=}")
                 if len(account.reasons) > 0:
                     print(f"{red}{account.reasons=}{reset}")
                 if account.good_bot:
-                    print(f"{green}Autodeclared bot{reset}")
-                decide(account)
+                    print(f"{green}{account.name=}:{account.good_bot=}{reset}")
+                option = ''
+                options = []
+                if decide(account, options):
+                    print(f'To report this account:\n * follow the link->click on "..."->"Report Profile"->Username->reason->"Harmful Bots"')
+                    option = input("1       - IGNORE ALL\n2       - IGNORE AUTODECLARED\n3       - IGNORE NON-CONCLUSIVE\n↵ Enter - Continue\n>")
+                    option = option.rstrip()
+                    if option == '1' and 'all' not in options:
+                        options.append('all')
+                    if option == '2' and 'good' not in options:
+                        options.append('good')
+                    if option == '3' and 'inconclusive' not in options:
+                        options.append('inconclusive')
+                    else:
+                        continue
+
+
+            print(f"Done deciding. {red}Exiting{reset}")
             exit()
 
         elif x == '2':
@@ -375,17 +392,19 @@ def options(reddit):
         else:
             print(f"No option {x} defined.\n\n")
             options(reddit)
-    except (KeyboardInterrupt, EOFError):
-            print(f"{red}Exitting\n{yellow}found {len(current_scan)} possible bots out of {count} accounts\n{reset}")
+    except KeyboardInterrupt:
+            done = False
+            print(f"{red}[+]ctrl + c detected\nExiting\n{yellow}found {len(current_scan)} possible bots out of {count} accounts\n{reset}")
             for account in current_scan:
                 print(f"{account.name=}:{account.sim_score=}:{account.lda_score=}")
                 if len(account.reasons) > 0:
                     print(f"{red}{account.name=}:{account.reasons=}{reset}")
                 if account.good_bot:
                     print(f"{green}{account.name=}:{account.good_bot=}{reset}")
-                if decide(account, z='',x=''):
-                    print(f'To report this account:\n * follow the link->click on "..."->"Report Profile"->Username->reason->"Harmful Bots"')
-                    input("Continue?")
+                done = decide(account, ['exiting'])
+            if done:
+                    print(f'To report account(s):\n * follow the link->click on "..."->"Report Profile"->Username->reason->"Harmful Bots"')
+            print(f"Done deciding. {red}Exiting{reset}")
 
 
 
