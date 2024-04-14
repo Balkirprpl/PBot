@@ -1,6 +1,6 @@
 from keys import key, client, user_agent
 from detect2 import scanAccount
-
+from decide import decide
 import praw
 import datetime
 import csv
@@ -8,6 +8,10 @@ import os
 import re
 import spacy
 import warnings
+import requests
+from requests.exceptions import RequestException
+
+
 
 reset = '\033[37m'
 red = '\033[31m'
@@ -249,9 +253,6 @@ def is_known_bot(username):
         else:
             return False
 
-def decide():
-    print("hmm what to do")
-
 def further_analysis(bot):
     # checking for shortened links in comments
     # possible fishing bot
@@ -325,12 +326,13 @@ def find_info(ids, depth):
             print(f"Exception {e} ocurred")
 
 def options(reddit):
-    x = input("1. Single search or 2. Submission search (1/2)? ")
-    x = x.rstrip()
-    if x == '1':
-        count = 0
-        x = input("Username or 0 to leave: ")
-        try:
+    count = 0
+    try:
+        x = input("1. Single search or 2. Submission search (1/2)? ")
+        x = x.rstrip()
+        if x == '1':
+            x = input("Username or 0 to leave: ")
+            #try:
             while x.rstrip() != '0':
                 if '/u/' in x[0:3]:
                     x = x[3:]
@@ -341,7 +343,39 @@ def options(reddit):
                 except Exception as e:
                     print(f"{red}Error While finding user {blue}{x}{reset}\n{e}")
                 x = input(">>> ")
-        except (KeyboardInterrupt, EOFError):
+            print(f"{green}Finishing search.\n{yellow}Found {len(current_scan)} bots out of {count} accounts\n{reset}")
+            for account in current_scan:
+                print(f"{account.name=} {account.sim_score=} {account.lda_score=}")
+                if len(account.reasons) > 0:
+                    print(f"{red}{account.reasons=}{reset}")
+                if account.good_bot:
+                    print(f"{green}Autodeclared bot{reset}")
+                decide(account)
+            exit()
+
+        elif x == '2':
+            subreddit = input("What subreddit you want to look at? ")
+            z = input("New, Hot or top submissions? (N/H/T) ")
+            y = int(input("How many posts to retrieve? "))
+
+            posts =[]
+            try:
+                if z.lower() == 'n':
+                    posts = reddit.subreddit(subreddit).new(limit=y)
+                if z.lower() == 'h':
+                    posts = reddit.subreddit(subreddit).hot(limit=y)
+                if z.lower() == 't':
+                    posts = reddit.subreddit(subreddit).top(limit=y)
+                depth = int(input("Depth: "))
+                post_ids = [post.id for post in posts]
+                find_info(post_ids, depth)
+            except Exception as e:
+                print(f"{red}Error while fetching posts. Exiting.{reset}\n{e}")
+                exit()
+        else:
+            print(f"No option {x} defined.\n\n")
+            options(reddit)
+    except (KeyboardInterrupt, EOFError):
             print(f"{red}Exitting\n{yellow}found {len(current_scan)} possible bots out of {count} accounts\n{reset}")
             for account in current_scan:
                 print(f"{account.name=}:{account.sim_score=}:{account.lda_score=}")
@@ -349,39 +383,10 @@ def options(reddit):
                     print(f"{red}{account.name=}:{account.reasons=}{reset}")
                 if account.good_bot:
                     print(f"{green}{account.name=}:{account.good_bot=}{reset}")
-            exit()
+                if decide(account, z='',x=''):
+                    print(f'To report this account:\n * follow the link->click on "..."->"Report Profile"->Username->reason->"Harmful Bots"')
+                    input("Continue?")
 
-        print(f"{green}Finishing search.\n{yellow}Found {len(current_scan)} bots out of {count} accounts\n{reset}")
-        for account in current_scan:
-            print(f"{account.name=} {account.sim_score=} {account.lda_score=}")
-            if len(account.reasons) > 0:
-                print(f"{red}{account.reasons=}{reset}")
-            if account.good_bot:
-                print(f"{green}Autodeclared bot{reset}")
-        exit()
-
-    elif x == '2':
-        subreddit = input("What subreddit you want to look at? ")
-        z = input("New, Hot or top submissions? (N/H/T) ")
-        y = int(input("How many posts to retrieve? "))
-
-        posts =[]
-        try:
-            if z.lower() == 'n':
-                posts = reddit.subreddit(subreddit).new(limit=y)
-            if z.lower() == 'h':
-                posts = reddit.subreddit(subreddit).hot(limit=y)
-            if z.lower() == 't':
-                posts = reddit.subreddit(subreddit).top(limit=y)
-            depth = int(input("Depth: "))
-            post_ids = [post.id for post in posts]
-            find_info(post_ids, depth)
-        except Exception as e:
-            print(f"{red}Error while fetching posts. Exiting.{reset}\n{e}")
-            exit()
-    else:
-        print(f"No option {x} defined.\n\n")
-        options(reddit)
 
 
 if __name__ == "__main__":
