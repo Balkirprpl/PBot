@@ -6,7 +6,7 @@ def decide(account, ignore_list):
     if 'exiting' in ignore_list:
         print(f"url: {cyan}{link}{account.name}{reset}")
         return True
-    if 'all' in ignore_list:
+    if 'all' in ignore_list or account.good_bot:
         return False
     if account.good_bot == '0' and not 'good' in ignore_list:
         print(f"Autodeclared bot usually not harmful.")
