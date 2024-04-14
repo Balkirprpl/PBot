@@ -161,11 +161,9 @@ def check_info(user):
     # checks if user is found in bots.txt
     known = is_known_bot(user.name)
 
-    #if not known:
-    print("Before Analysis:")
+    if known:
+        print(f"{cyan}{account.name}{green} has been found in the list.{reset}")
     account.print_bot()
-    #else:
-    #    print(f"{cyan}{account.name}{green} is a known bot{reset}")
     # ------------------------------
     #   Calculating txt similarity
     # ------------------------------
@@ -178,9 +176,9 @@ def check_info(user):
             z *= compare_text(c1, c2)
 
     if z > 0.3:
-        print(f"Index of suspiciousty (Result of detection method 1): {red}{z} (Likely Bot){reset}")
+        print(f"1st Bot Detection Score: {red}{z} (Likely Bot){reset}")
     else:
-        print(f"Index of suspiciousty (Result of detection method 1): {blue}{z} (Not Likely Bot){reset}")
+        print(f"1st Bot Detection Score: {blue}{z} (Not Likely Bot){reset}")
 
     # -----------------------------
     #   Analysing account data
@@ -203,8 +201,8 @@ def check_info(user):
         account.set_user(user)
         further_analysis(account)
         current_scan.append(account)
-        print("After Analysis")
-        account.print_bot()
+        if len(account.reasons) > 0:
+            print(f"{red}{account.reasons}{reset}")
     else:
         print(f"{green}{user.name} not found as a bot{reset}")
 
@@ -249,13 +247,13 @@ def further_analysis(bot):
     # possible fishing bot
     n_links, n_short_links = check_links(bot)
     print(f"{bot.name} has {n_links} links and {n_short_links} shortened links")
-    if n_short_links > 0:
+    if n_short_links > 0 or n_links > 1:
         bot.add_reason(f"{bot.name}:{bot.ID} was caught sending shortened links")
 
     # checking for profanity
     # possible harrasing bot
     profanity = count_bad_words(bot)
-    if profanity >= 500:
+    if profanity >= 300:
         bot.add_reason(f"{bot.name}:{bot.ID} was caught possibly harrassing another user")
     print(f"This account has used profanity {profanity} times")
 
@@ -265,7 +263,6 @@ def further_analysis(bot):
     if declared_bot:
         bot.set_good()
     print(f"is this account a autodeclared bot? {declared_bot}")
-
     print()
 
 def count_bad_words(bot):
