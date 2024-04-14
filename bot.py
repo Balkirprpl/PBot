@@ -12,7 +12,7 @@ import spacy
 import warnings
 import requests
 from requests.exceptions import RequestException
-
+from Bot import Bot
 from colors import reset, red, green, yellow, blue, purple, cyan
 
 current_scan = []
@@ -31,25 +31,25 @@ db = csv.writer(file)
 if os.path.getsize(DATABASE) == 0:
     headers = ['user_id','username','link_karma','comment_karma','created','verified','submissions','comments']
     db.writerow(headers)
+delete = """
+#class Bot:
+#    def __init__(self, data):
+#        self.ID = data[0]
+#        self.name = data[1]
+#        self.link_karma = data[2]
+#        self.comment_karma = data[3]
+#        self.total_karma = data[4]
+#        self.birth = data[5]
+#        self.verified = data[6]
+#        self.n_submissions = data[7]
+#        self.n_comments = data[8]
+#
+#        self.sim_score = -1
+#        self.lda_score = -1
 
-class Bot:
-    def __init__(self, data):
-        self.ID = data[0]
-        self.name = data[1]
-        self.link_karma = data[2]
-        self.comment_karma = data[3]
-        self.total_karma = data[4]
-        self.birth = data[5]
-        self.verified = data[6]
-        self.n_submissions = data[7]
-        self.n_comments = data[8]
+#        self.reasons= []
 
-        self.sim_score = -1
-        self.lda_score = -1
-
-        self.reasons= []
-
-        self.good_bot = False
+#        self.good_bot = False
 
     def update_scores(self, new_sim, new_lda):
         self.sim_score = new_sim
@@ -68,7 +68,6 @@ class Bot:
         self.good_bot = True
 
     def print_bot(self):
-        print(f"""Username: {cyan}{self.name}{reset}
 Id: {green}{self.ID}{reset}
 Link Karma: {blue}{self.link_karma}{reset}
 Comment Karma: {blue}{self.comment_karma}{reset}
@@ -77,12 +76,10 @@ Account age: {yellow}{self.birth}{reset}
 Is verified: {yellow}{self.verified}{reset}
 Total submissions: {yellow}{self.n_submissions}{reset}
 Total comments: {yellow}{self.n_comments}{reset}
-""")
-
+"""
 #{'Detected reasons: '+ red if len(self.reasons) > 0 else ''}
 #{self.reasons if len(self.reasons) > 0 else ''}
 #{green + 'This is a good bot' + reset if self.good_bot else reset}""")
-
 
 def print_comments(user):
     for comments in user.comments.new(limit=None):
