@@ -131,10 +131,6 @@ def check_info(user):
 
     # calculating n of links and n of commens
     for comments in all_comments:
-        # print(f"links: {find_links(comments.body)}")
-        # make a request to see if the link is shortened?
-        # res code 3xx == shortened link
-        # links_in_comments = find_links(comments.body)
         if total_comments < COMMENT_DEPTH and "://www." not in comments.body:
             comment_similarity_array.append(comments.body)
         total_comments += 1
@@ -156,16 +152,18 @@ def check_info(user):
     add_to_db(data)
     #print_account(data)
     account = Bot(data)
+    check_account(account)
 
+def check_account(account)
 
     # checks if user is found in bots.txt
     known = is_known_bot(user.name)
 
-    if not known:
-        print("Before Analysis:")
-        account.print_bot()
-    else:
-        print(f"{cyan}{account.name}{green} is a known bot{reset}")
+    #if not known:
+    print("Before Analysis:")
+    account.print_bot()
+    #else:
+    #    print(f"{cyan}{account.name}{green} is a known bot{reset}")
     # ------------------------------
     #   Calculating txt similarity
     # ------------------------------
@@ -178,9 +176,9 @@ def check_info(user):
             z *= compare_text(c1, c2)
 
     if z > 0.3:
-        print(f"Index of suspiciousty (Result of detection method 1): {red}{z} (Likely Bot){reset}")
+        print(f"1st Bot Detection Score{red}{z} (Likely Bot){reset}")
     else:
-        print(f"Index of suspiciousty (Result of detection method 1): {blue}{z} (Not Likely Bot){reset}")
+        print(f"1st Bot Detection Score{blue}{z} (Not Likely Bot){reset}")
 
     # -----------------------------
     #   Analysing account data
@@ -191,11 +189,6 @@ def check_info(user):
         print(f"""2nd Bot Detection Score: {red}{detect2_data} (Likely Bot){reset}""")
     else:
         print(f"""2nd Bot Detection Score: {blue}{detect2_data} (Not Likely Bot){reset}""")
-
-    if ((detect2_data > 129 and z >= 0.3) or (detect2_data <= 129 and z < 0.3)):
-        print(f"""{green}Agreement in Detection{reset}\n""")
-    else:
-        print(f"""{red}Disagreement in Detection{reset}\n""")
 
     if z >= 0.3 or detect2_data >= 130:
         print(f"Initiating further analysis")
