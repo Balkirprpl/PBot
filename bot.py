@@ -161,11 +161,11 @@ def check_info(user):
     # checks if user is found in bots.txt
     known = is_known_bot(user.name)
 
-    if not known:
-        print("Before Analysis:")
-        account.print_bot()
-    else:
-        print(f"{cyan}{account.name}{green} is a known bot{reset}")
+    #if not known:
+    print("Before Analysis:")
+    account.print_bot()
+    #else:
+    #    print(f"{cyan}{account.name}{green} is a known bot{reset}")
     # ------------------------------
     #   Calculating txt similarity
     # ------------------------------
