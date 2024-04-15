@@ -1,0 +1,495 @@
+found 140 possible bots out of 200 accounts
+
+account.name='Kevin_Garnett_Bot':account.sim_score=0.3694317202801647:account.lda_score=43.681447440994404
+account.name='Kevin_Garnett_Bot':account.good_bot=True
+url: https://www.reddit.com/user/Kevin_Garnett_Bot
+account.name='DropBox_Bot':account.sim_score=1.0:account.lda_score=70.01891207068184
+account.name='DropBox_Bot':account.reasons=['DropBox_Bot:dq9cc was caught sending shortened links']
+account.name='DropBox_Bot':account.good_bot=True
+url: https://www.reddit.com/user/DropBox_Bot
+account.name='Website_Mirror_Bot':account.sim_score=1.0000008311528354:account.lda_score=70.0199655560914
+account.name='Website_Mirror_Bot':account.reasons=['Website_Mirror_Bot:bv54r was caught sending shortened links']
+account.name='Website_Mirror_Bot':account.good_bot=True
+url: https://www.reddit.com/user/Website_Mirror_Bot
+account.name='Metric_System_Bot':account.sim_score=0.9646428485657248:account.lda_score=96.025561110785
+account.name='Metric_System_Bot':account.good_bot=True
+url: https://www.reddit.com/user/Metric_System_Bot
+account.name='Some_Bot':account.sim_score=0.6343566610789105:account.lda_score=70.07608314416882
+account.name='Some_Bot':account.good_bot=True
+url: https://www.reddit.com/user/Some_Bot
+account.name='Brigade_Bot':account.sim_score=0.9999996102130334:account.lda_score=80.01873429918842
+account.name='Brigade_Bot':account.good_bot=True
+url: https://www.reddit.com/user/Brigade_Bot
+account.name='Porygon-Bot':account.sim_score=1.0:account.lda_score=146.14914445349126
+account.name='Porygon-Bot':account.reasons=['Porygon-Bot:bdm84 was caught sending shortened links']
+account.name='Porygon-Bot':account.good_bot=True
+url: https://www.reddit.com/user/Porygon-Bot
+account.name='KarmaConspiracy_Bot':account.sim_score=1.0:account.lda_score=74.01796244313331
+account.name='KarmaConspiracy_Bot':account.reasons=['KarmaConspiracy_Bot:7v23k was caught sending shortened links']
+account.name='KarmaConspiracy_Bot':account.good_bot=True
+url: https://www.reddit.com/user/KarmaConspiracy_Bot
+account.name='SWTOR_Helper_Bot':account.sim_score=1.0:account.lda_score=182.7949795755326
+account.name='SWTOR_Helper_Bot':account.reasons=['SWTOR_Helper_Bot:coucn was caught sending shortened links']
+account.name='SWTOR_Helper_Bot':account.good_bot=True
+url: https://www.reddit.com/user/SWTOR_Helper_Bot
+account.name='wtf_content_bot':account.sim_score=1.0:account.lda_score=148.93806767446085
+account.name='wtf_content_bot':account.good_bot=True
+url: https://www.reddit.com/user/wtf_content_bot
+account.name='Insane_Photo_Bot':account.sim_score=0.8357577419246373:account.lda_score=83.60309187865757
+account.name='Insane_Photo_Bot':account.reasons=['Insane_Photo_Bot:ezdsg was caught sending shortened links']
+account.name='Insane_Photo_Bot':account.good_bot=True
+url: https://www.reddit.com/user/Insane_Photo_Bot
+account.name='qznc_bot':account.sim_score=0.9999997934855827:account.lda_score=138.38426100199553
+account.name='qznc_bot':account.good_bot=True
+url: https://www.reddit.com/user/qznc_bot
+account.name='mma_gif_bot':account.sim_score=1.0:account.lda_score=20.018514644199456
+account.name='mma_gif_bot':account.reasons=['mma_gif_bot:dvd84 was caught sending shortened links']
+account.name='mma_gif_bot':account.good_bot=True
+url: https://www.reddit.com/user/mma_gif_bot
+account.name='bRMT_Bot':account.sim_score=0.9999998997049101:account.lda_score=70.01744608464485
+account.name='bRMT_Bot':account.reasons=['bRMT_Bot:ev4tb was caught sending shortened links']
+account.name='bRMT_Bot':account.good_bot=True
+url: https://www.reddit.com/user/bRMT_Bot
+account.name='hockey_gif_bot':account.sim_score=1.0:account.lda_score=50.01468138129008
+account.name='hockey_gif_bot':account.reasons=['hockey_gif_bot:e8bil was caught sending shortened links']
+account.name='hockey_gif_bot':account.good_bot=True
+url: https://www.reddit.com/user/hockey_gif_bot
+account.name='nba_gif_bot':account.sim_score=1.0:account.lda_score=70.01845840615634
+account.name='nba_gif_bot':account.reasons=['nba_gif_bot:dvcyb was caught sending shortened links']
+account.name='nba_gif_bot':account.good_bot=True
+url: https://www.reddit.com/user/nba_gif_bot
+account.name='gifster_bot':account.sim_score=1.00000008251943:account.lda_score=80.01721747100926
+account.name='gifster_bot':account.good_bot=True
+url: https://www.reddit.com/user/gifster_bot
+account.name='imirror_bot':account.sim_score=0.9573710779290484:account.lda_score=70.01755086790337
+account.name='imirror_bot':account.reasons=['imirror_bot:czb0g was caught sending shortened links']
+account.name='imirror_bot':account.good_bot=True
+url: https://www.reddit.com/user/imirror_bot
+account.name='tennis_gif_bot':account.sim_score=1.0:account.lda_score=0.017832144524124367
+account.name='tennis_gif_bot':account.reasons=['tennis_gif_bot:ewqle was caught sending shortened links']
+account.name='tennis_gif_bot':account.good_bot=True
+url: https://www.reddit.com/user/tennis_gif_bot
+account.name='nfl_gif_bot':account.sim_score=1.0:account.lda_score=50.01566113442277
+account.name='nfl_gif_bot':account.reasons=['nfl_gif_bot:e895x was caught sending shortened links']
+account.name='nfl_gif_bot':account.good_bot=True
+url: https://www.reddit.com/user/nfl_gif_bot
+account.name='CPTModBot':account.sim_score=1.0:account.lda_score=128.01634935075265
+account.name='CPTModBot':account.good_bot=True
+url: https://www.reddit.com/user/CPTModBot
+account.name='LocationBot':account.sim_score=1.0:account.lda_score=0.072575750449352
+account.name='LocationBot':account.reasons=['LocationBot:d0tgm was caught possibly harrassing another user']
+account.name='LocationBot':account.good_bot=True
+url: https://www.reddit.com/user/LocationBot
+account.name='WritingPromptsBot':account.sim_score=1.0:account.lda_score=96.02852494874715
+account.name='WritingPromptsBot':account.good_bot=True
+url: https://www.reddit.com/user/WritingPromptsBot
+account.name='CreepierSmileBot':account.sim_score=0.00010895483912357747:account.lda_score=252.69968915174815
+account.name='CreepierSmileBot':account.good_bot=True
+url: https://www.reddit.com/user/CreepierSmileBot
+account.name='IAgreeBot':account.sim_score=1.0:account.lda_score=156.0168429775907
+account.name='IAgreeBot':account.good_bot=True
+url: https://www.reddit.com/user/IAgreeBot
+account.name='HockeyGT_Bot':account.sim_score=0.9525819569186612:account.lda_score=59.5071714032843
+account.name='HockeyGT_Bot':account.good_bot=True
+url: https://www.reddit.com/user/HockeyGT_Bot
+account.name='soccer_gif_bot':account.sim_score=1.0:account.lda_score=20.02031193348428
+account.name='soccer_gif_bot':account.reasons=['soccer_gif_bot:dunix was caught sending shortened links']
+account.name='soccer_gif_bot':account.good_bot=True
+url: https://www.reddit.com/user/soccer_gif_bot
+account.name='gunners_gif_bot':account.sim_score=1.0:account.lda_score=50.01970553431979
+account.name='gunners_gif_bot':account.reasons=['gunners_gif_bot:ec5mf was caught sending shortened links']
+account.name='gunners_gif_bot':account.good_bot=True
+url: https://www.reddit.com/user/gunners_gif_bot
+account.name='PokemonFlairBot':account.sim_score=0.05597384803839494:account.lda_score=194.1405449993475
+account.name='PokemonFlairBot':account.good_bot=True
+url: https://www.reddit.com/user/PokemonFlairBot
+account.name='ChristianityBot':account.sim_score=1.0:account.lda_score=63.17463917549413
+account.name='ChristianityBot':account.reasons=['ChristianityBot:abnkz was caught sending shortened links']
+account.name='ChristianityBot':account.good_bot=True
+url: https://www.reddit.com/user/ChristianityBot
+account.name='StreetFightMirrorBot':account.sim_score=1.0:account.lda_score=20.019502749533824
+account.name='StreetFightMirrorBot':account.reasons=['StreetFightMirrorBot:d4gao was caught sending shortened links']
+account.name='StreetFightMirrorBot':account.good_bot=True
+url: https://www.reddit.com/user/StreetFightMirrorBot
+account.name='FedoraTipAutoBot':account.sim_score=1.0:account.lda_score=132.04313405707458
+account.name='FedoraTipAutoBot':account.good_bot=True
+url: https://www.reddit.com/user/FedoraTipAutoBot
+account.name='UnobtaniumTipBot':account.sim_score=1.0:account.lda_score=60.014492982116195
+account.name='UnobtaniumTipBot':account.good_bot=True
+url: https://www.reddit.com/user/UnobtaniumTipBot
+account.name='astro-bot':account.sim_score=1.0:account.lda_score=55.602124531065485
+account.name='astro-bot':account.good_bot=True
+url: https://www.reddit.com/user/astro-bot
+account.name='TipMoonBot':account.sim_score=1.0:account.lda_score=114.03715858549658
+account.name='TipMoonBot':account.reasons=['TipMoonBot:eysio was caught sending shortened links']
+account.name='TipMoonBot':account.good_bot=True
+url: https://www.reddit.com/user/TipMoonBot
+account.name='PlaylisterBot':account.sim_score=0.9999998007720079:account.lda_score=138.05634112452594
+account.name='PlaylisterBot':account.reasons=['PlaylisterBot:agckg was caught possibly harrassing another user']
+account.name='PlaylisterBot':account.good_bot=True
+url: https://www.reddit.com/user/PlaylisterBot
+account.name='fedora_tip_bot':account.sim_score=1.0:account.lda_score=70.01762922927807
+account.name='fedora_tip_bot':account.good_bot=True
+url: https://www.reddit.com/user/fedora_tip_bot
+account.name='GunnersGifsBot':account.sim_score=1.0:account.lda_score=148.0492265010188
+account.name='GunnersGifsBot':account.reasons=['GunnersGifsBot:emzaf was caught sending shortened links']
+account.name='GunnersGifsBot':account.good_bot=True
+url: https://www.reddit.com/user/GunnersGifsBot
+account.name='PGN-Bot':account.sim_score=1.0:account.lda_score=28.020901847097516
+account.name='PGN-Bot':account.reasons=['PGN-Bot:epesu was caught sending shortened links']
+account.name='PGN-Bot':account.good_bot=True
+url: https://www.reddit.com/user/PGN-Bot
+account.name='GunnitBot':account.sim_score=1.0:account.lda_score=128.0172587395875
+account.name='GunnitBot':account.reasons=['GunnitBot:8yf38 was caught sending shortened links']
+account.name='GunnitBot':account.good_bot=True
+url: https://www.reddit.com/user/GunnitBot
+account.name='havoc_bot':account.sim_score=1.0:account.lda_score=192.09495711547217
+account.name='havoc_bot':account.reasons=['havoc_bot:c2mx8 was caught sending shortened links']
+account.name='havoc_bot':account.good_bot=True
+url: https://www.reddit.com/user/havoc_bot
+account.name='Relevant_News_Bot':account.sim_score=0.4696483783642829:account.lda_score=100.02952241423472
+account.name='Relevant_News_Bot':account.good_bot=True
+url: https://www.reddit.com/user/Relevant_News_Bot
+account.name='RealtechPostBot':account.sim_score=1.0:account.lda_score=150.0661833567663
+account.name='RealtechPostBot':account.good_bot=True
+url: https://www.reddit.com/user/RealtechPostBot
+account.name='imgurHostBot':account.sim_score=1.0:account.lda_score=20.035008516972187
+account.name='imgurHostBot':account.reasons=['imgurHostBot:eubk2 was caught sending shortened links']
+account.name='imgurHostBot':account.good_bot=True
+url: https://www.reddit.com/user/imgurHostBot
+account.name='Gatherer_bot':account.sim_score=0.33568838570287723:account.lda_score=74.02033575016465
+account.name='Gatherer_bot':account.good_bot=True
+url: https://www.reddit.com/user/Gatherer_bot
+account.name='DeltaBot':account.sim_score=1.0:account.lda_score=94.05331180297463
+account.name='DeltaBot':account.reasons=['DeltaBot:ap4fp was caught sending shortened links']
+account.name='DeltaBot':account.good_bot=True
+url: https://www.reddit.com/user/DeltaBot
+account.name='PhoenixBot':account.sim_score=1.0:account.lda_score=20.017279606507422
+account.name='PhoenixBot':account.reasons=['PhoenixBot:cyuq2 was caught sending shortened links']
+account.name='PhoenixBot':account.good_bot=True
+url: https://www.reddit.com/user/PhoenixBot
+account.name='IsItDownBot':account.sim_score=0.8204202204750631:account.lda_score=142.0335366313015
+account.name='IsItDownBot':account.reasons=['IsItDownBot:espzz was caught sending shortened links']
+account.name='IsItDownBot':account.good_bot=True
+url: https://www.reddit.com/user/IsItDownBot
+account.name='CompileBot':account.sim_score=1.0:account.lda_score=20.016509242376017
+account.name='CompileBot':account.reasons=['CompileBot:e4qti was caught sending shortened links']
+account.name='CompileBot':account.good_bot=True
+url: https://www.reddit.com/user/CompileBot
+account.name='SakuraiBot':account.sim_score=-0.05019495159039473:account.lda_score=164.0490396450152
+account.name='SakuraiBot':account.reasons=['SakuraiBot:c1j0v was caught possibly harrassing another user']
+account.name='SakuraiBot':account.good_bot=True
+url: https://www.reddit.com/user/SakuraiBot
+account.name='asmrspambot':account.sim_score=1.0:account.lda_score=118.02035467235208
+account.name='asmrspambot':account.reasons=['asmrspambot:779qw was caught sending shortened links']
+account.name='asmrspambot':account.good_bot=True
+url: https://www.reddit.com/user/asmrspambot
+account.name='RfreebandzBOT':account.sim_score=0.7751036872692876:account.lda_score=110.0
+account.name='RfreebandzBOT':account.good_bot=True
+url: https://www.reddit.com/user/RfreebandzBOT
+account.name='rule_bot':account.sim_score=0.824029542041847:account.lda_score=31.2822479413011
+account.name='rule_bot':account.good_bot=True
+url: https://www.reddit.com/user/rule_bot
+account.name='xkcdcomic_bot':account.sim_score=1.0:account.lda_score=147.81789420458168
+account.name='xkcdcomic_bot':account.reasons=['xkcdcomic_bot:crbvx was caught sending shortened links']
+account.name='xkcdcomic_bot':account.good_bot=True
+url: https://www.reddit.com/user/xkcdcomic_bot
+account.name='PloungeMafiaVoteBot':account.sim_score=0.9534067181917931:account.lda_score=10.017101644091431
+account.name='PloungeMafiaVoteBot':account.reasons=['PloungeMafiaVoteBot:ehu9w was caught sending shortened links']
+account.name='PloungeMafiaVoteBot':account.good_bot=True
+url: https://www.reddit.com/user/PloungeMafiaVoteBot
+account.name='SuchModBot':account.sim_score=0.3827161916073044:account.lda_score=80.03506172526542
+account.name='SuchModBot':account.good_bot=True
+url: https://www.reddit.com/user/SuchModBot
+account.name='MultiFunctionBot':account.sim_score=0.0:account.lda_score=152.03693804162498
+account.name='MultiFunctionBot':account.good_bot=True
+url: https://www.reddit.com/user/MultiFunctionBot
+account.name='xkcd_bot':account.sim_score=1.0:account.lda_score=20.016299067317973
+account.name='xkcd_bot':account.reasons=['xkcd_bot:7odg1 was caught sending shortened links']
+account.name='xkcd_bot':account.good_bot=True
+url: https://www.reddit.com/user/xkcd_bot
+account.name='VerseBot':account.sim_score=1.0:account.lda_score=28.016164990242277
+account.name='VerseBot':account.reasons=['VerseBot:cn5eg was caught sending shortened links', 'VerseBot:cn5eg was caught possibly harrassing another user']
+account.name='VerseBot':account.good_bot=True
+url: https://www.reddit.com/user/VerseBot
+account.name='BeetusBot':account.sim_score=1.0:account.lda_score=70.01903888048318
+account.name='BeetusBot':account.reasons=['BeetusBot:de662 was caught sending shortened links', 'BeetusBot:de662 was caught possibly harrassing another user']
+account.name='BeetusBot':account.good_bot=True
+url: https://www.reddit.com/user/BeetusBot
+account.name='GameDealsBot':account.sim_score=1.0:account.lda_score=100.03058828915294
+account.name='GameDealsBot':account.reasons=['GameDealsBot:bbrze was caught possibly harrassing another user']
+account.name='GameDealsBot':account.good_bot=True
+url: https://www.reddit.com/user/GameDealsBot
+account.name='BadLinguisticsBot':account.sim_score=0.5922757355994325:account.lda_score=70.03073232996194
+account.name='BadLinguisticsBot':account.good_bot=True
+url: https://www.reddit.com/user/BadLinguisticsBot
+account.name='rhiever-bot':account.sim_score=1.0:account.lda_score=1010.6373691268719
+account.name='rhiever-bot':account.good_bot=True
+url: https://www.reddit.com/user/rhiever-bot
+account.name='gfycat-bot-sucksdick':account.sim_score=1.0:account.lda_score=117.46242402639348
+account.name='gfycat-bot-sucksdick':account.reasons=['gfycat-bot-sucksdick:ezf2q was caught sending shortened links']
+account.name='gfycat-bot-sucksdick':account.good_bot=True
+url: https://www.reddit.com/user/gfycat-bot-sucksdick
+account.name='chromabot':account.sim_score=0.9534572998312794:account.lda_score=50.04482307456171
+account.name='chromabot':account.good_bot=True
+url: https://www.reddit.com/user/chromabot
+account.name='Readdit_Bot':account.sim_score=1.0:account.lda_score=86.88417640275334
+account.name='Readdit_Bot':account.reasons=['Readdit_Bot:ezncw was caught sending shortened links', 'Readdit_Bot:ezncw was caught possibly harrassing another user']
+account.name='Readdit_Bot':account.good_bot=True
+url: https://www.reddit.com/user/Readdit_Bot
+account.name='wooshbot':account.sim_score=1.0:account.lda_score=126.69198497253089
+account.name='wooshbot':account.good_bot=True
+url: https://www.reddit.com/user/wooshbot
+account.name='request_bot':account.sim_score=0.685847643691499:account.lda_score=154.05718689790726
+account.name='request_bot':account.good_bot=True
+url: https://www.reddit.com/user/request_bot
+account.name='define_bot':account.sim_score=1.0:account.lda_score=69.14926352771018
+account.name='define_bot':account.reasons=['define_bot:d0yhe was caught sending shortened links']
+account.name='define_bot':account.good_bot=True
+url: https://www.reddit.com/user/define_bot
+account.name='dogetipbot':account.sim_score=1.0:account.lda_score=56.27884639145307
+account.name='dogetipbot':account.good_bot=True
+url: https://www.reddit.com/user/dogetipbot
+account.name='rightsbot':account.sim_score=1.0:account.lda_score=20.024449690557343
+account.name='rightsbot':account.reasons=['rightsbot:74st8 was caught sending shortened links']
+account.name='rightsbot':account.good_bot=True
+url: https://www.reddit.com/user/rightsbot
+account.name='colorcodebot':account.sim_score=0.999999572624968:account.lda_score=32.02217839451782
+account.name='colorcodebot':account.reasons=['colorcodebot:cqy12 was caught sending shortened links', 'colorcodebot:cqy12 was caught possibly harrassing another user']
+account.name='colorcodebot':account.good_bot=True
+url: https://www.reddit.com/user/colorcodebot
+account.name='ADHDbot':account.sim_score=1.0:account.lda_score=278.36686215128447
+account.name='ADHDbot':account.reasons=['ADHDbot:7vegb was caught sending shortened links']
+account.name='ADHDbot':account.good_bot=True
+url: https://www.reddit.com/user/ADHDbot
+account.name='hearing-aid_bot':account.sim_score=0.39385490310457033:account.lda_score=101.41372081420953
+account.name='hearing-aid_bot':account.good_bot=True
+url: https://www.reddit.com/user/hearing-aid_bot
+account.name='WikipediaCitationBot':account.sim_score=1.0:account.lda_score=75.5707235802074
+account.name='WikipediaCitationBot':account.good_bot=True
+url: https://www.reddit.com/user/WikipediaCitationBot
+account.name='PonyTipBot':account.sim_score=0.9599421821495981:account.lda_score=82.01814589523198
+account.name='PonyTipBot':account.good_bot=True
+url: https://www.reddit.com/user/PonyTipBot
+account.name='classybot':account.sim_score=1.0:account.lda_score=0.0
+account.name='classybot':account.good_bot=True
+url: https://www.reddit.com/user/classybot
+account.name='JotBot':account.sim_score=0.00038438070760488455:account.lda_score=152.0503380279194
+account.name='JotBot':account.good_bot=True
+url: https://www.reddit.com/user/JotBot
+account.name='WeeaBot':account.sim_score=1.0:account.lda_score=70.01688937794827
+account.name='WeeaBot':account.reasons=['WeeaBot:dhg92 was caught sending shortened links']
+account.name='WeeaBot':account.good_bot=True
+url: https://www.reddit.com/user/WeeaBot
+account.name='VideoLinkBot':account.sim_score=0.8127279490967904:account.lda_score=33.38093417972962
+account.name='VideoLinkBot':account.reasons=['VideoLinkBot:acthp was caught possibly harrassing another user']
+account.name='VideoLinkBot':account.good_bot=True
+url: https://www.reddit.com/user/VideoLinkBot
+account.name='new_eden_news_bot':account.sim_score=1.0:account.lda_score=276.06112734548043
+account.name='new_eden_news_bot':account.reasons=['new_eden_news_bot:e89xn was caught sending shortened links', 'new_eden_news_bot:e89xn was caught possibly harrassing another user']
+account.name='new_eden_news_bot':account.good_bot=True
+url: https://www.reddit.com/user/new_eden_news_bot
+account.name='hwsbot':account.sim_score=1.0:account.lda_score=101.04763751912179
+account.name='hwsbot':account.reasons=['hwsbot:dbdiw was caught sending shortened links']
+account.name='hwsbot':account.good_bot=True
+url: https://www.reddit.com/user/hwsbot
+account.name='UrbanDicBot':account.sim_score=1.0:account.lda_score=80.0255877704191
+account.name='UrbanDicBot':account.good_bot=True
+url: https://www.reddit.com/user/UrbanDicBot
+account.name='thankyoubot':account.sim_score=0.4384422813281764:account.lda_score=50.01721974995332
+account.name='thankyoubot':account.good_bot=True
+url: https://www.reddit.com/user/thankyoubot
+account.name='ExmoBot':account.sim_score=0.3353402647516367:account.lda_score=77.39166438626481
+account.name='ExmoBot':account.reasons=['ExmoBot:9e5ad was caught sending shortened links']
+account.name='ExmoBot':account.good_bot=True
+url: https://www.reddit.com/user/ExmoBot
+account.name='tips_bot':account.sim_score=0.8138286475471395:account.lda_score=60.0
+account.name='tips_bot':account.good_bot=True
+url: https://www.reddit.com/user/tips_bot
+account.name='rnfl_robot':account.sim_score=1.0:account.lda_score=100.01369107412215
+account.name='rnfl_robot':account.good_bot=True
+url: https://www.reddit.com/user/rnfl_robot
+account.name='StackBot':account.sim_score=1.0:account.lda_score=80.01907231264676
+account.name='StackBot':account.reasons=['StackBot:evle6 was caught sending shortened links']
+account.name='StackBot':account.good_bot=True
+url: https://www.reddit.com/user/StackBot
+account.name='DogeTipStatsBot':account.sim_score=1.0:account.lda_score=62.15896367306394
+account.name='DogeTipStatsBot':account.good_bot=True
+url: https://www.reddit.com/user/DogeTipStatsBot
+account.name='autourbanbot':account.sim_score=1.0:account.lda_score=20.027851402382154
+account.name='autourbanbot':account.reasons=['autourbanbot:ewy76 was caught sending shortened links', 'autourbanbot:ewy76 was caught possibly harrassing another user']
+account.name='autourbanbot':account.good_bot=True
+url: https://www.reddit.com/user/autourbanbot
+account.name='GabenCoinTipBot':account.sim_score=0.9680984052816861:account.lda_score=52.02622831050224
+account.name='GabenCoinTipBot':account.good_bot=True
+url: https://www.reddit.com/user/GabenCoinTipBot
+account.name='_Definition_Bot_':account.sim_score=0.876882952702975:account.lda_score=78.93416581945178
+account.name='_Definition_Bot_':account.reasons=['_Definition_Bot_:cr2zd was caught sending shortened links', '_Definition_Bot_:cr2zd was caught possibly harrassing another user']
+account.name='_Definition_Bot_':account.good_bot=True
+url: https://www.reddit.com/user/_Definition_Bot_
+account.name='redditbots':account.sim_score=1.0:account.lda_score=185.85277927063757
+account.name='redditbots':account.reasons=['redditbots:7lkgh was caught sending shortened links']
+account.name='redditbots':account.good_bot=True
+url: https://www.reddit.com/user/redditbots
+account.name='__bot__':account.sim_score=0.37839928060339983:account.lda_score=50.0
+account.name='__bot__':account.good_bot=True
+url: https://www.reddit.com/user/__bot__
+account.name='autowikibot':account.sim_score=0.6249404576687309:account.lda_score=70.03281992874346
+account.name='autowikibot':account.reasons=['autowikibot:enhq4 was caught sending shortened links', 'autowikibot:enhq4 was caught possibly harrassing another user']
+account.name='autowikibot':account.good_bot=True
+url: https://www.reddit.com/user/autowikibot
+account.name='golferbot':account.sim_score=1.0:account.lda_score=88.03151940752122
+account.name='golferbot':account.good_bot=True
+url: https://www.reddit.com/user/golferbot
+account.name='topredditbot':account.sim_score=1.0000007782661444:account.lda_score=72.02074155228443
+account.name='topredditbot':account.good_bot=True
+url: https://www.reddit.com/user/topredditbot
+account.name='c5bot':account.sim_score=0.023021524244278113:account.lda_score=168.45966644717402
+account.name='c5bot':account.good_bot=True
+url: https://www.reddit.com/user/c5bot
+account.name='gracefulclaritybot':account.sim_score=0.4061612550138898:account.lda_score=50.03194960360851
+account.name='gracefulclaritybot':account.reasons=['gracefulclaritybot:edpuo was caught sending shortened links']
+account.name='gracefulclaritybot':account.good_bot=True
+url: https://www.reddit.com/user/gracefulclaritybot
+account.name='valkyribot':account.sim_score=0.729205236591284:account.lda_score=210.03977763127403
+account.name='valkyribot':account.good_bot=True
+url: https://www.reddit.com/user/valkyribot
+account.name='gracefulcharitybot':account.sim_score=0.5616925216437321:account.lda_score=62.016574175896196
+account.name='gracefulcharitybot':account.reasons=['gracefulcharitybot:dnb27 was caught possibly harrassing another user']
+account.name='gracefulcharitybot':account.good_bot=True
+url: https://www.reddit.com/user/gracefulcharitybot
+account.name='bitofnewsbot':account.sim_score=1.0:account.lda_score=53.379186695058564
+account.name='bitofnewsbot':account.reasons=['bitofnewsbot:dcbza was caught sending shortened links', 'bitofnewsbot:dcbza was caught possibly harrassing another user']
+account.name='bitofnewsbot':account.good_bot=True
+url: https://www.reddit.com/user/bitofnewsbot
+account.name='d3posterbot':account.sim_score=0.3332887698786512:account.lda_score=52.13032117519373
+account.name='d3posterbot':account.reasons=['d3posterbot:dz4hv was caught sending shortened links', 'd3posterbot:dz4hv was caught possibly harrassing another user']
+account.name='d3posterbot':account.good_bot=True
+url: https://www.reddit.com/user/d3posterbot
+account.name='serendipitybot':account.sim_score=0.01927602617859255:account.lda_score=138.0367200493425
+account.name='serendipitybot':account.good_bot=True
+url: https://www.reddit.com/user/serendipitybot
+account.name='gabentipbot':account.sim_score=1.0:account.lda_score=60.0
+account.name='gabentipbot':account.good_bot=True
+url: https://www.reddit.com/user/gabentipbot
+account.name='givesafuckbot':account.sim_score=1.0:account.lda_score=60.0
+account.name='givesafuckbot':account.good_bot=True
+url: https://www.reddit.com/user/givesafuckbot
+account.name='SakuraiBot_test':account.sim_score=1.0:account.lda_score=176.05056953793664
+account.name='SakuraiBot_test':account.good_bot=True
+url: https://www.reddit.com/user/SakuraiBot_test
+account.name='ttumblrbots':account.sim_score=1.0:account.lda_score=20.184854755905405
+account.name='ttumblrbots':account.reasons=['ttumblrbots:bdwyn was caught sending shortened links']
+account.name='ttumblrbots':account.good_bot=True
+url: https://www.reddit.com/user/ttumblrbots
+account.name='stabbot':account.sim_score=0.9999997452948335:account.lda_score=230.0410408518431
+account.name='stabbot':account.good_bot=True
+url: https://www.reddit.com/user/stabbot
+account.name='DeepFryBot':account.sim_score=0.9999999102913565:account.lda_score=145.03897738200678
+account.name='DeepFryBot':account.good_bot=True
+url: https://www.reddit.com/user/DeepFryBot
+account.name='GifReversingBot':account.sim_score=1.0:account.lda_score=54.08270924149497
+account.name='GifReversingBot':account.reasons=['GifReversingBot:121oo1 was caught sending shortened links']
+account.name='GifReversingBot':account.good_bot=True
+url: https://www.reddit.com/user/GifReversingBot
+account.name='vredditshare':account.sim_score=1.0:account.lda_score=45.557141116178286
+account.name='vredditshare':account.reasons=['vredditshare:2dhr4m0m was caught sending shortened links']
+account.name='vredditshare':account.good_bot=True
+url: https://www.reddit.com/user/vredditshare
+account.name='gifendore':account.sim_score=1.0000003698023434:account.lda_score=113.37204876877205
+account.name='gifendore':account.reasons=['gifendore:3bf3bzmk was caught sending shortened links']
+account.name='gifendore':account.good_bot=True
+url: https://www.reddit.com/user/gifendore
+account.name='WololoBot':account.sim_score=1.0:account.lda_score=148.02523515917028
+account.name='WololoBot':account.good_bot=True
+url: https://www.reddit.com/user/WololoBot
+account.name='RemindMeBot':account.sim_score=1.0:account.lda_score=22.655295920025015
+account.name='RemindMeBot':account.reasons=['RemindMeBot:gbm4p was caught sending shortened links']
+account.name='RemindMeBot':account.good_bot=True
+url: https://www.reddit.com/user/RemindMeBot
+account.name='profanitycounter':account.sim_score=1.0:account.lda_score=57.97952320122843
+account.name='profanitycounter':account.reasons=['profanitycounter:4sk81sqg was caught sending shortened links', 'profanitycounter:4sk81sqg was caught possibly harrassing another user']
+account.name='profanitycounter':account.good_bot=True
+url: https://www.reddit.com/user/profanitycounter
+account.name='Eminem_Bot':account.sim_score=1.0:account.lda_score=188.03548311722233
+account.name='Eminem_Bot':account.reasons=['Eminem_Bot:dgrmedp3 was caught sending shortened links']
+account.name='Eminem_Bot':account.good_bot=True
+url: https://www.reddit.com/user/Eminem_Bot
+account.name='hornispoiler':account.sim_score=1.0:account.lda_score=118.02324258360112
+account.name='hornispoiler':account.reasons=['hornispoiler:rnitl9tq was caught sending shortened links']
+url: https://www.reddit.com/user/hornispoiler
+account.name='underscorebot':account.sim_score=1.0:account.lda_score=72.03783552439504
+account.name='underscorebot':account.reasons=['underscorebot:jbcdzspf was caught sending shortened links']
+account.name='underscorebot':account.good_bot=True
+url: https://www.reddit.com/user/underscorebot
+account.name='OCRAutoModerator':account.sim_score=1.0:account.lda_score=128.01665206328312
+url: https://www.reddit.com/user/OCRAutoModerator
+account.name='HSpamSlayer':account.sim_score=1.0:account.lda_score=302.0333946145936
+url: https://www.reddit.com/user/HSpamSlayer
+account.name='notesbot':account.sim_score=4.068202971639288e-06:account.lda_score=168.04491879153
+account.name='notesbot':account.good_bot=True
+url: https://www.reddit.com/user/notesbot
+account.name='Glass-Bot':account.sim_score=0.48630633292469616:account.lda_score=158.98063093735854
+account.name='Glass-Bot':account.good_bot=True
+url: https://www.reddit.com/user/Glass-Bot
+account.name='ChannelBot':account.sim_score=0.9999999853946471:account.lda_score=131.42787451294413
+account.name='ChannelBot':account.good_bot=True
+url: https://www.reddit.com/user/ChannelBot
+account.name='FishMahBot':account.sim_score=0.0011275832186649977:account.lda_score=192.4551109529958
+account.name='FishMahBot':account.reasons=['FishMahBot:60vs1fcw was caught possibly harrassing another user']
+account.name='FishMahBot':account.good_bot=True
+url: https://www.reddit.com/user/FishMahBot
+account.name='SpamSentinel':account.sim_score=0.2160955188343463:account.lda_score=208.16511556404373
+url: https://www.reddit.com/user/SpamSentinel
+account.name='ModeratelyUsefulBot':account.sim_score=1.0:account.lda_score=879.0007875090552
+account.name='ModeratelyUsefulBot':account.reasons=['ModeratelyUsefulBot:qlcs15mw was caught sending shortened links', 'ModeratelyUsefulBot:qlcs15mw was caught possibly harrassing another user']
+account.name='ModeratelyUsefulBot':account.good_bot=True
+url: https://www.reddit.com/user/ModeratelyUsefulBot
+account.name='FloodgatesBot':account.sim_score=1.0000001034894237:account.lda_score=94.19453869999055
+account.name='FloodgatesBot':account.good_bot=True
+url: https://www.reddit.com/user/FloodgatesBot
+account.name='DuplicateDestroyer':account.sim_score=1.0:account.lda_score=50.364271128190516
+account.name='DuplicateDestroyer':account.reasons=['DuplicateDestroyer:6wo9wpea was caught sending shortened links', 'DuplicateDestroyer:6wo9wpea was caught possibly harrassing another user']
+account.name='DuplicateDestroyer':account.good_bot=True
+url: https://www.reddit.com/user/DuplicateDestroyer
+account.name='MAGIC_EYE_BOT':account.sim_score=1.0:account.lda_score=27.14103770939225
+account.name='MAGIC_EYE_BOT':account.reasons=['MAGIC_EYE_BOT:2717bc9o was caught sending shortened links']
+account.name='MAGIC_EYE_BOT':account.good_bot=True
+url: https://www.reddit.com/user/MAGIC_EYE_BOT
+account.name='RepostSleuthBot':account.sim_score=1.0:account.lda_score=75.13022420514265
+account.name='RepostSleuthBot':account.reasons=['RepostSleuthBot:33p62kyo was caught sending shortened links']
+account.name='RepostSleuthBot':account.good_bot=True
+url: https://www.reddit.com/user/RepostSleuthBot
+account.name='TheReposterminator':account.sim_score=0.7772017930100131:account.lda_score=44.891696731568615
+account.name='TheReposterminator':account.reasons=['TheReposterminator:678dhud3 was caught sending shortened links', 'TheReposterminator:678dhud3 was caught possibly harrassing another user']
+url: https://www.reddit.com/user/TheReposterminator
+account.name='Flair_Helper':account.sim_score=1.0:account.lda_score=35.58832313342282
+account.name='Flair_Helper':account.reasons=['Flair_Helper:77zyvbzs was caught sending shortened links']
+url: https://www.reddit.com/user/Flair_Helper
+account.name='Taskerbot':account.sim_score=1.0:account.lda_score=12.027262403233534
+account.name='Taskerbot':account.reasons=['Taskerbot:nph5u was caught sending shortened links']
+account.name='Taskerbot':account.good_bot=True
+url: https://www.reddit.com/user/Taskerbot
+account.name='QualityVote':account.sim_score=0.7362572394768423:account.lda_score=114.15921541860357
+url: https://www.reddit.com/user/QualityVote
+account.name='AssistantBOT1':account.sim_score=0.30138174229255826:account.lda_score=128.0350103940815
+account.name='AssistantBOT1':account.good_bot=True
+url: https://www.reddit.com/user/AssistantBOT1
+account.name='QueueClearBot':account.sim_score=0.46972138238389577:account.lda_score=146.03108537886575
+account.name='QueueClearBot':account.good_bot=True
+url: https://www.reddit.com/user/QueueClearBot
+account.name='notesbot':account.sim_score=4.068202971639288e-06:account.lda_score=168.04491879153
+account.name='notesbot':account.good_bot=True
+url: https://www.reddit.com/user/notesbot
+account.name='ContextModBot':account.sim_score=1.0:account.lda_score=20.01644469390745
+account.name='ContextModBot':account.reasons=['ContextModBot:cgzknus4 was caught sending shortened links']
+account.name='ContextModBot':account.good_bot=True
+url: https://www.reddit.com/user/ContextModBot
+account.name='AutoLockBot':account.sim_score=1.0:account.lda_score=10.0
+account.name='AutoLockBot':account.good_bot=True
+url: https://www.reddit.com/user/AutoLockBot
+To report account(s):
+ * follow the link->click on "..."->"Report Profile"->Username->reason->"Harmful Bots"
+Done deciding. Exiting
+
+

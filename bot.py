@@ -279,7 +279,7 @@ def options(reddit):
         else:
             print(f"No option {x} defined.\n\n")
             options(reddit)
-    except KeyboardInterrupt:
+    except (KeyboardInterrupt, EOFError):
             done = False
             print(f"{red}[+]ctrl + c detected\nExiting\n{yellow}found {len(current_scan)} possible bots out of {count} accounts\n{reset}")
             for account in current_scan:
