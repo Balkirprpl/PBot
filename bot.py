@@ -8,7 +8,7 @@ import spacy
 import numpy as np
 
 from detect2 import scanAccount
-from keys import key, client, user_agent
+from common_functions import reddit
 
 reset = '\033[37m'
 red = '\033[31m'
@@ -69,9 +69,9 @@ def compare_text(text1, text2):
     return similarity
 
 
-def check_comments(user):
-    for comments in user.comments.new(limit=None):
-        print(comments.body)
+# def check_comments(user):
+#     for comments in user.comments.new(limit=None):
+#         print(comments.body)
 
 
 def add_to_db(data):
@@ -128,6 +128,7 @@ def display_info(user):
             user.verified,
             total_submissions,
             total_comments]
+    
     add_to_db(data)
     print_account(data)
     
@@ -156,12 +157,12 @@ def display_info(user):
     else:
         print(f"""2nd Bot Detection Score: {blue}{detect2_data} (Not Likely Bot){reset}""")
     
-    if (detect2_data > 129 and z >= 0.3) or (detect2_data <= 129 and z < 0.3):
+    if (detect2_data > 129 and z_score >= 0.3) or (detect2_data <= 129 and z_score < 0.3):
         print(f"""{green}Agreement in Detection{reset}\n""")
     else:
         print(f"""{red}Disagreement in Detection{reset}\n""")
     
-    if z >= 0.3 or detect2_data >= 130:
+    if z_score >= 0.3 or detect2_data >= 130:
         print(f"Initiating further analysis")
         bot = Bot(data)
         bot.update_scores(z_score, detect2_data)
@@ -254,11 +255,12 @@ def find_info(ids, depth):
             for comment in submission.comments.list():
                 if comment.author:
                     author = comment.author
-                    user = reddit.redditor(author)
+                    # user = reddit.redditor(author)
                     # for c in user.comments.new(limit=5):
                     #    print(1)
                     # check_comments(author)
-                    display_info(user)
+                    # display_info(user)
+                    display_info(reddit.redditor(author))
         # except RequestException:
         #    print("Request error occurred")
         # except Exception as e:
@@ -285,7 +287,7 @@ def check_account_response_time(username):
     
     for comment in redditor.comments.new(limit=None):
         parent = comment.parent()
-        if isinstance(parent, praw.models.Comment):
+        if isinstance(parent, praw.reddit.models.Comment):
             response_time = comment.created_utc - parent.created_utc
             response_times.append(response_time)
             if response_time < 60 and len(comment.body) > 150:
@@ -309,13 +311,6 @@ def check_account_response_time(username):
 
 
 if __name__ == "__main__":
-    # Initialize the Reddit API client
-    reddit = praw.Reddit(
-        client_id = client,
-        client_secret = key,
-        user_agent = user_agent
-    )
-    
     load_bad_words()
     
     # TODO Better variable names. Maybe rewrite to use cmd, argparse or some other builtin like dictionaries.
@@ -328,8 +323,10 @@ if __name__ == "__main__":
                 x = x[3:]
                 print(x)
             try:
-                user = reddit.redditor(x)
-                display_info(user)
+                # user = reddit.redditor(x)
+                # display_info(user)
+                display_info(reddit.redditor(x))
+            
             except Exception as e:
                 print(f"{red}Error While finding user {blue}{x}{reset}\n{e}")
             x = input(">>> ")

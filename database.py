@@ -68,7 +68,6 @@ def insert_CSV_data(table_name, conn):  # opens respective csv file and inserts 
 
 
 def build_sql_query(table_name, csv_file):
-    header = []  # stores headers in separate list
     header = next(csv_file).replace("\n", "")
     header = header.split(",")
     

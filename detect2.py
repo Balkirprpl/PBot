@@ -3,15 +3,7 @@ import math
 from datetime import date
 from datetime import datetime
 
-import praw
-
-from keys import key, client, user_agent
-
-reddit = praw.Reddit(
-    client_id = client,
-    client_secret = key,
-    user_agent = user_agent
-)
+from common_functions import reddit
 
 
 def KnownBotCheck(username):
@@ -56,8 +48,8 @@ def AnalysePosts(user, PostLimit):
         UniqueTitle.add(post.title)
     
     if postsAnalysed_count > 0:
-        return 100 * (postsAnalysed_count - len(UniquePosts)) / postsAnalysed_count + 100 * (
-                postsAnalysed_count - len(UniqueTitle)) / postsAnalysed_count
+        return calc_score(postsAnalysed_count, UniquePosts) + calc_score(postsAnalysed_count, UniqueTitle)
+    
     return 0
 
 
@@ -79,6 +71,7 @@ def TimeDifference(t1, t2, ReturnDays):
 def PostingInterval(user, NumberOfPostsAnalysed):
     # analyse time interval between each post
     IsFirstComment = 1
+    weight = 0
     previous_date = 0  # previous post's date
     days_interval = []  # difference in time between consecutive posts, measured in days
     time_interval = []  # difference in time between consecutive post time, measured in seconds
@@ -159,9 +152,15 @@ def AnalyseComments(user, NumberOfPostsAnalysed):
     for comment in user.comments.new(limit=NumberOfPostsAnalysed):
         UniqueComments.add(comment.body)
         CommentsAnalysed_count += 1
+        
     if CommentsAnalysed_count > 0:
-        return 100 * (CommentsAnalysed_count - len(UniqueComments)) / CommentsAnalysed_count
+        return calc_score(CommentsAnalysed_count, UniqueComments)
+    
     return 0
+
+
+def calc_score(analyzed, unique):
+    return 100 * (analyzed - len(unique)) / analyzed
 
 
 def BotScore(username, PostLimit):

@@ -1,3 +1,5 @@
 praw~=7.7.1
 spacy~=4.0.0.dev2
 mysql-connector-python~=8.3.0
+
+numpy~=1.26.4
