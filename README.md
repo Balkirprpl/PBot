@@ -21,4 +21,4 @@ File: PBot/keys.py
 ───────┼────────────────────────────────────────────────────────────────────────
    1   │ key = "<secret key>"
    2   │ client = "<client key>"
-   3   │ user_agent ="<user agent>"```
+   3   │ user_agent ="<user agent>"
