@@ -18,8 +18,10 @@ Running this program should allow the user to distinguish between real people, b
    git clone https://github.com/Balkirprpl/PBot.git
    cd PBot
 2. Install Dependencies:
-  ```pip install -r requirements.txt```
-3. Create and configure a 'keys.py' file API keys:
+  ```
+pip install -r requirements.txt
+```
+4. Create and configure a 'keys.py' file API keys:
 ``` 
 File: PBot/keys.py
 ───────┼────────────────────────────────────────────────────────────────────────
