@@ -11,13 +11,13 @@ A simple bot to monitor and enforce rules.
 ## How to Use
 1. Clone this repo:
    ```bash
-   git clone https://github.com/your-username/policing-bot.git
-   cd policing-bot```
+   git clone https://github.com/Balkirprpl/PBot.git
+   cd PBot
 2. Install Dependencies:
   ```pip install -r requirements.txt```
 3. Create and configure a 'keys.py' file API keys:
- 
-```File: PBot/keys.py
+``` 
+File: PBot/keys.py
 ───────┼────────────────────────────────────────────────────────────────────────
    1   │ key = "<secret key>"
    2   │ client = "<client key>"
