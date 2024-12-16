@@ -1,12 +1,16 @@
 # Policing Bot
 
 ## Overview
-A simple bot to monitor and enforce rules.
+PBot's idea come from the extensive use of fake users in social media, and AI has made them even harder to distinguish from real accounts.
+Running this program should allow the user to distinguish between real people, bots, and malicious bots. The scans can be performed in two modes: Single Search and Submission Search
 
-## Features
-- Tracks activity.
-- Flags and enforces rule violations.
-- Easy to configure.
+### SINGLE SEARCH:
+- Analyzes a single user for bot behavior and maliciousness.
+### SUBMISSION SEARCH:
+- Finds users in Subreddits by New, Hot, or Top submissions.
+- Analyzes each users account history and gives a veredict.
+- Allows the user to set the depth of search.
+- Stores findings in database-friendly format.
 
 ## How to Use
 1. Clone this repo:
